@@ -8,6 +8,7 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
 import ProjectsAll from './components/ProjectsAll';
 
 function Home() {
@@ -34,6 +35,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/projects-all" element={<ProjectsAll />} />
         </Routes>
       </div>
