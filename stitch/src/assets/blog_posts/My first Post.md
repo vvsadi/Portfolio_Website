@@ -2,7 +2,7 @@
 # --- Copy this whole file for each new post; then replace every placeholder below ---
 #
 # title: The headline readers see on the post page and in the blog list.
-title: "Pilot..."
+title: "Pilot"
 #
 # date: Publication date, year-month-day. Used to sort newest-first on the blog index.
 date: "04/04/2026"

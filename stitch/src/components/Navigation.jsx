@@ -7,9 +7,13 @@ export default function Navigation() {
     <nav className="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-lg tracking-tight">
+          <Link
+            to="/"
+            className="font-bold text-lg tracking-tight hover:opacity-90 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-sm"
+            aria-label="Home"
+          >
             <span className="leading-none" style={{ fontFamily: "'Lucida Calligraphy', cursive", fontSize: "2rem", fontWeight: 400 }}>VVS</span>
-          </span>
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a className="hover:text-primary transition-colors" href={isHome ? "#about" : "/#about"}>About</a>

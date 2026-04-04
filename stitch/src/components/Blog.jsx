@@ -25,10 +25,11 @@ export default function Blog() {
             <span className="material-symbols-outlined text-primary text-3xl md:text-4xl">history_edu</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            Blog
+            Aditya's Blog...
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mt-4 mx-auto md:mx-0">
-            Experiences, learnings, and thoughts on various topics.
+            Welcome!
+            This place is where I share my thoughts, learnings, and experiences.
           </p>
         </div>
 
