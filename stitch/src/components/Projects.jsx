@@ -1,151 +1,154 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { projects, caseStudies } from './projectData';
-import ProjectCard from './ProjectCard';
-
-const VIEW_ALL_URL = '/projects-all';
-const CARDS_PER_VIEW = 3;
-
-function Carousel({ children, className = '' }) {
-  const items = Array.isArray(children) ? children : [];
-  const count = items.length;
-  const totalSlides = Math.max(1, Math.ceil(count / CARDS_PER_VIEW));
-  const [index, setIndex] = useState(0);
-
-  const goPrev = () => setIndex((i) => Math.max(0, i - 1));
-  const goNext = () => setIndex((i) => Math.min(totalSlides - 1, i + 1));
-
-  const slideWidthPercent = 100 / totalSlides;
-  const slides = [];
-
-  for (let s = 0; s < totalSlides; s += 1) {
-    slides.push(
-      <div
-        key={s}
-        className="grid gap-6 min-w-0 shrink-0"
-        style={{
-          flex: `0 0 ${slideWidthPercent}%`,
-          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-        }}
-      >
-        {items
-          .slice(s * CARDS_PER_VIEW, s * CARDS_PER_VIEW + CARDS_PER_VIEW)
-          .map((card, i) => (
-            <div key={`${s}-${i}`} className="min-w-0 flex">
-              {card}
-            </div>
-          ))}
-      </div>
-    );
-  }
-
-  return (
-    <div className={`relative w-full ${className}`}>
-      <button
-        type="button"
-        onClick={goPrev}
-        disabled={index === 0}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 size-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none"
-        aria-label="Previous"
-      >
-        <span className="material-symbols-outlined text-xl">chevron_left</span>
-      </button>
-      <button
-        type="button"
-        onClick={goNext}
-        disabled={index >= totalSlides - 1}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 size-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-md flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none"
-        aria-label="Next"
-      >
-        <span className="material-symbols-outlined text-xl">chevron_right</span>
-      </button>
-      <div className="overflow-hidden w-full">
-        <div
-          className="flex transition-transform duration-300 ease-out"
-          style={{
-            width: `${totalSlides * 100}%`,
-            transform: `translateX(-${(index / totalSlides) * 100}%)`,
-          }}
-        >
-          {slides}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function Projects() {
-  const projectCards = projects.map((p) => (
-    <ProjectCard key={p.id} project={p} />
-  ));
-
-  const caseStudyCards = caseStudies.map((c) => (
-    <ProjectCard key={c.id} project={c} />
-  ));
-
   return (
-    <section
-      className="py-10 border-t border-slate-100 dark:border-slate-800"
-      id="projects"
-    >
-      <div className="mb-12">
-        <h2 className="text-3xl font-bold flex items-center gap-3">
-          <span className="material-symbols-outlined text-primary">
-            rocket_launch
-          </span>
-          Featured Projects
-        </h2>
-        <p className="text-slate-500 mt-2">
-          Selected work in AI, Data, and Web Platforms
-        </p>
-      </div>
-
+    <>
       {/* Projects */}
-      <div className="mb-16">
-        <div className="flex justify-between items-end mb-6">
-          <h3 className="text-xl font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg">
-              code
-            </span>
-            Projects
-          </h3>
-          <a
-            href={VIEW_ALL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary font-bold flex items-center gap-1 hover:underline"
-          >
-            View All{' '}
-            <span className="material-symbols-outlined text-base">
-              arrow_outward
-            </span>
-          </a>
+      <section id="work" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '92px 28px 0' }}>
+        <h2 className="section-heading" style={{ margin: '0 0 40px' }}>Projects</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+          {projects.map((p) => (
+            <div
+              key={p.id}
+              data-reveal
+              className="group"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                background: 'var(--card)',
+                border: '1px solid var(--line)',
+                borderRadius: 10,
+                padding: 26,
+                gap: 14,
+                transition: 'border-color .18s ease, transform .25s cubic-bezier(.2,.7,.3,1)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--ink)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--line)'; e.currentTarget.style.transform = 'none'; }}
+            >
+              <span
+                style={{
+                  alignSelf: 'flex-start',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 10,
+                  letterSpacing: '.12em',
+                  textTransform: 'uppercase',
+                  padding: '5px 10px',
+                  borderRadius: 999,
+                  background: 'var(--chip)',
+                  color: 'var(--ink)',
+                  fontWeight: 500,
+                }}
+              >
+                {p.category}
+              </span>
+              <Link
+                to={`/projects/${p.id}`}
+                style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--ink)', lineHeight: 1.15 }}
+              >
+                {p.title}
+              </Link>
+              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1 }}>{p.description}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {p.tags.map((t) => (
+                  <span
+                    key={t}
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: 10,
+                      padding: '4px 8px',
+                      border: '1px solid var(--line)',
+                      borderRadius: 999,
+                      color: 'var(--muted)',
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 18,
+                  paddingTop: 14,
+                  borderTop: '1px solid var(--line)',
+                  fontSize: 14,
+                  fontWeight: 600,
+                }}
+              >
+                <Link to={`/projects/${p.id}`} style={{ color: 'var(--ink)' }}>View project →</Link>
+                <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)' }}>View GitHub ↗</a>
+              </div>
+            </div>
+          ))}
         </div>
-        <Carousel>{projectCards}</Carousel>
-      </div>
+      </section>
 
       {/* Case Studies */}
-      <div>
-        <div className="flex justify-between items-end mb-6">
-          <h3 className="text-xl font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-lg">
-              description
-            </span>
-            Case Studies
-          </h3>
-          <a
-            href={VIEW_ALL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary font-bold flex items-center gap-1 hover:underline"
-          >
-            View All{' '}
-            <span className="material-symbols-outlined text-base">
-              arrow_outward
-            </span>
-          </a>
+      <section data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '76px 28px 0' }}>
+        <h2 className="section-heading" style={{ margin: '0 0 32px' }}>Case studies</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+          {caseStudies.map((c) => (
+            <div
+              key={c.id}
+              data-reveal
+              className="group"
+              style={{
+                background: 'var(--card)',
+                border: '1px solid var(--line)',
+                borderRadius: 10,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'transform .25s cubic-bezier(.2,.7,.3,1), border-color .25s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'var(--ink)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.borderColor = 'var(--line)'; }}
+            >
+              <div style={{ padding: '22px 22px 16px' }}>
+                <h3 style={{ fontSize: 23, fontWeight: 700, letterSpacing: '-0.025em', margin: 0, color: 'var(--ink)' }}>{c.title}</h3>
+              </div>
+              <div style={{ padding: '0 22px' }}>
+                <iframe
+                  src={c.embed}
+                  title={c.title}
+                  loading="lazy"
+                  allowFullScreen
+                  style={{
+                    width: '100%',
+                    aspectRatio: '16/10',
+                    border: '1px solid var(--line)',
+                    borderRadius: 8,
+                    display: 'block',
+                    background: 'var(--chip)',
+                  }}
+                />
+              </div>
+              <div style={{ padding: '20px 22px 24px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+                <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1 }}>{c.description}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {c.tags.map((t) => (
+                    <span
+                      key={t}
+                      style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: 10,
+                        padding: '4px 8px',
+                        border: '1px solid var(--line)',
+                        borderRadius: 999,
+                        color: 'var(--muted)',
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <Carousel>{caseStudyCards}</Carousel>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

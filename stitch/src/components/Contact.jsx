@@ -1,60 +1,106 @@
-import gmailIcon from '../assets/Gmail_icon.png';
-import githubIcon from '../assets/Github.png';
-import whatsappIcon from '../assets/Whatsapp.png';
-
 export default function Contact() {
   return (
-    <section className="py-20 border-t border-slate-100 dark:border-slate-800" id="contact">
-      <div className="grid lg:grid-cols-2 gap-16">
+    <section id="contact" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '110px 28px 0' }}>
+      <div
+        style={{
+          background: 'var(--ink)',
+          color: 'var(--paper)',
+          borderRadius: 14,
+          padding: 64,
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)',
+          gap: 64,
+        }}
+      >
         <div>
-          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary">alternate_email</span> Get in Touch
+          <h2
+            style={{
+              fontSize: 'clamp(34px, 4.4vw, 54px)',
+              fontWeight: 700,
+              letterSpacing: '-0.035em',
+              margin: '0 0 20px',
+              lineHeight: 1,
+            }}
+          >
+            Let's talk.
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed">
+          <p style={{ fontSize: 17, lineHeight: 1.6, opacity: .72, margin: '0 0 36px', maxWidth: '40ch' }}>
             Interested in collaborating on a product or discussing the latest in AI? I'm always open to talking shop.
           </p>
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 group">
-              <div className="size-14 bg-slate-100 dark:bg-slate-900 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors overflow-hidden">
-                <img src={whatsappIcon} alt="Whatsapp" className="w-full h-full object-contain dark:invert group-hover:invert-0 transition-all" />
-              </div>
-              <span className="font-medium">+1 (945)-251-3495</span>
-            </div>
-            <a className="flex items-center gap-4 group" href="mailto:adityavemparalausa@gmail.com">
-              <div className="size-12 bg-slate-100 dark:bg-slate-900 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors overflow-hidden p-2.5">
-                <img src={gmailIcon} alt="Gmail" className="w-full h-full object-contain" />
-              </div>
-              <span className="font-medium">adityavemparalausa@gmail.com</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, fontSize: 16 }}>
+            <a href="mailto:adityavemparalausa@gmail.com" style={{ color: 'var(--paper)', borderBottom: '1px solid var(--onInkLine)', paddingBottom: 10 }}>
+              adityavemparalausa@gmail.com
             </a>
-            <a className="flex items-center gap-4 group" href="https://github.com/vvsadi" target="_blank" rel="noopener noreferrer">
-              <div className="size-12 bg-slate-100 dark:bg-slate-900 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors overflow-hidden p-2.5">
-                <img src={githubIcon} alt="GitHub" className="w-full h-full object-contain dark:invert group-hover:invert-0 transition-all" />
-              </div>
-              <span className="font-medium">github.com/vvsadi</span>
+            <a href="https://github.com/vvsadi" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--paper)', borderBottom: '1px solid var(--onInkLine)', paddingBottom: 10 }}>
+              github.com/vvsadi
             </a>
+            <span style={{ opacity: .72, paddingBottom: 10 }}>+1 (945) 251-3495</span>
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xl">
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Name</label>
-                <input className="w-full bg-slate-50 dark:bg-slate-800 border-0 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary transition-all" placeholder="John Doe" type="text" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Email</label>
-                <input className="w-full bg-slate-50 dark:bg-slate-800 border-0 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary transition-all" placeholder="john@example.com" type="email" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400">Message</label>
-              <textarea className="w-full bg-slate-50 dark:bg-slate-800 border-0 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary transition-all" placeholder="How can I help you?" rows="4"></textarea>
-            </div>
-            <button className="w-full bg-primary text-white py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all">
-              Send Message
-            </button>
-          </form>
-        </div>
+        <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <input
+              placeholder="Name"
+              className="on-ink"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--onInkLine)',
+                borderRadius: 8,
+                padding: '15px 16px',
+                color: 'var(--paper)',
+                fontSize: 15,
+                width: '100%',
+                boxSizing: 'border-box',
+              }}
+            />
+            <input
+              placeholder="Email"
+              type="email"
+              className="on-ink"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--onInkLine)',
+                borderRadius: 8,
+                padding: '15px 16px',
+                color: 'var(--paper)',
+                fontSize: 15,
+                width: '100%',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+          <textarea
+            rows={6}
+            placeholder="What's on your mind?"
+            className="on-ink"
+            style={{
+              background: 'transparent',
+              border: '1px solid var(--onInkLine)',
+              borderRadius: 8,
+              padding: '15px 16px',
+              color: 'var(--paper)',
+              fontSize: 15,
+              width: '100%',
+              boxSizing: 'border-box',
+              resize: 'vertical',
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              background: 'var(--paper)',
+              color: 'var(--ink)',
+              border: 0,
+              borderRadius: 999,
+              padding: 16,
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Send message
+          </button>
+        </form>
       </div>
     </section>
   );
