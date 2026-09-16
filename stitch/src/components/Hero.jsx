@@ -6,7 +6,7 @@ import Aditya4 from '../assets/Aditya4.jpeg';
 import Aditya5 from '../assets/Aditya5.jpg';
 import Aditya6 from '../assets/Aditya6.jpg';
 import Aditya7 from '../assets/Aditya7.jpeg';
-import resumePDF from '../assets/Aditya Vemparala Resume v1.0.pdf';
+import resumePDF from '../assets/Aditya Vemparala Resume.pdf';
 import oracleLogo from '../assets/oracle.png';
 import bmoLogo from '../assets/bmo-blue-on-transparent-en.png';
 import radiantLogo from '../assets/radiant-logo.png';
