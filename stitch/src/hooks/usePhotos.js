@@ -6,6 +6,7 @@ export function usePhotos() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
     supabase
       .from('photos')
       .select('*')
@@ -17,6 +18,7 @@ export function usePhotos() {
   }, []);
 
   const addLike = useCallback(async (photoId) => {
+    if (!supabase) return;
     const photo = photos.find((p) => p.id === photoId);
     if (!photo) return;
     const newCount = (photo.likes || 0) + 1;

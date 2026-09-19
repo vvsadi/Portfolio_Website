@@ -6,6 +6,7 @@ export function usePosts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
     supabase
       .from('posts')
       .select('*')
@@ -24,7 +25,7 @@ export function usePost(slug) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!slug) {
+    if (!slug || !supabase) {
       setLoading(false);
       return;
     }
@@ -40,7 +41,7 @@ export function usePost(slug) {
   }, [slug]);
 
   async function incrementLikes() {
-    if (!post) return;
+    if (!post || !supabase) return;
     const { data } = await supabase
       .from('posts')
       .update({ likes: post.likes + 1 })
