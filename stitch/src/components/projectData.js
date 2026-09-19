@@ -64,6 +64,30 @@ export const projects = [
     tags: ['React.js', 'Flask', 'REST API', 'Figma', 'Product Development', 'UI/UX Design', 'DBMS'],
     repoUrl: 'https://github.com/vvsadi/azure_data_eng_proj_ADF',
   },
+  {
+    id: 'Text2SQL-1',
+    title: 'Text to SQL Query and Insights Chat Interface with Semantic Caching',
+    category: 'Work',
+    description: 'Generate SQL queries from Natural Language using LLMs and Knowledge Graphs with business ontologies, and generate insight summaries for business users.',
+    tags: ['Data Engineering', 'neo4j', 'AutoGen', 'Semantic Caching', 'Knowledge Graphs', 'LLMs', 'Business Ontologies', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
+    repoUrl: '#',
+  },
+  {
+    id: 'Text2SQL-2',
+    title: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
+    category: 'Work',
+    description: 'A Benchmarking Harness for evaluating three retrieval architectures - Semantic Search, Knowledge Graph Retrieval, and Full Schema Prompting to measure Execution Accuracy using BIRD Standards and Token Consumption metrics in each retrieval architecture for the same natural language user query.Informs architectural decision making in AI systems.',
+    tags: ['Data Engineering', 'neo4j', 'Knowledge Graphs', 'LiteLLM', 'LLMs', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
+    repoUrl: '#',
+  },
+  {
+    id: 'Text2SQL-3',
+    title: 'AIFinOps Assistant',
+    category: 'Work',
+    description: 'An AIFinOps assistant for tracking token consumption and LLM usage with dynamic model routing based on query complexity,using Semantic Caching, Knowledge Graphs, Ontologies, RAG pipelines, and Zero-shot Classification Models.',
+    tags: ['Data Engineering', 'neo4j', 'AutoGen', 'Semantic Caching', 'Knowledge Graphs', 'LLMs', 'Business Ontologies', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
+    repoUrl: '#',
+  },
 ];
 
 export const caseStudies = [
