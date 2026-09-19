@@ -48,7 +48,22 @@ export default function Projects() {
               >
                 {p.title}
               </Link>
-              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1, whiteSpace: 'pre-line' }}>{p.description}</p>
+              <p
+                style={{
+                  fontSize: 15,
+                  color: 'var(--muted)',
+                  lineHeight: 1.55,
+                  margin: 0,
+                  flex: 1,
+                  minHeight: '4.65em',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {p.card_description ?? p.description}
+              </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {p.tags.map((t) => (
                   <span
@@ -59,7 +74,8 @@ export default function Projects() {
                       padding: '4px 8px',
                       border: '1px solid var(--line)',
                       borderRadius: 999,
-                      color: 'var(--muted)',
+                      color: 'var(--ink)',
+                      opacity: 0.82,
                     }}
                   >
                     {t}
@@ -128,7 +144,22 @@ export default function Projects() {
                 />
               </div>
               <div style={{ padding: '20px 22px 24px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1, whiteSpace: 'pre-line' }}>{c.description}</p>
+                <p
+                  style={{
+                    fontSize: 15,
+                    color: 'var(--muted)',
+                    lineHeight: 1.55,
+                    margin: 0,
+                    flex: 1,
+                    minHeight: '4.65em',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {c.card_description ?? c.description}
+                </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {c.tags.map((t) => (
                     <span
@@ -139,7 +170,8 @@ export default function Projects() {
                         padding: '4px 8px',
                         border: '1px solid var(--line)',
                         borderRadius: 999,
-                        color: 'var(--muted)',
+                        color: 'var(--ink)',
+                        opacity: 0.82,
                       }}
                     >
                       {t}

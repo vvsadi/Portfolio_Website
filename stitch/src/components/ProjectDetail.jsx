@@ -59,7 +59,8 @@ export default function ProjectDetail() {
               padding: '5px 10px',
               border: '1px solid var(--line)',
               borderRadius: 999,
-              color: 'var(--muted)',
+              color: 'var(--ink)',
+              opacity: 0.82,
             }}
           >
             {t}

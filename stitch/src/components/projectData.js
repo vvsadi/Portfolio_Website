@@ -2,9 +2,9 @@ export const projects = [
   {
     id: 'feastit',
     title: 'FeastIT',
-    category: 'Academic',
-    description:
-      'A B2C food delivery prototype featuring order tracking and vendor management.',
+    category: 'Consulting Project',
+    card_description: 'A B2C food delivery prototype featuring order tracking and vendor management.',
+    description:'A B2C food delivery prototype featuring order tracking and vendor management.',
     tags: ['React.js', 'MySQL', 'Flask', 'REST API'],
     repoUrl: 'https://github.com/vvsadi/FeastIT-Customer',
     embed: 'https://www.canva.com/design/DAHDq0yE1fw/pcQpKY09HkvsLHnDhu7lOQ/view?embed',
@@ -12,9 +12,9 @@ export const projects = [
   {
     id: 'skysolve',
     title: 'SkySolve - AI Assistant',
-    category: 'Academic',
-    description:
-      'AI assistant that uses speech-to-text and NLP summarization for real-time customer support.',
+    category: 'Consulting Project',
+    card_description: 'AI assistant that uses speech-to-text and NLP summarization for real-time customer support.',
+    description:'AI assistant that uses speech-to-text using Assembly AI, NLP summarization using OpenAI APIs, and a excel for recording customer feedback and flight details in real-time. The assistant also integrates with Gmail APIs to enable email notifications regarding requested flight information or revised itineraries.\nUse Cases:\n 1) Flight Re-booking\n2) Flight and Baggage Policy Information\n3) Speech-to-Text system for customer queries and feedback\n4) Automation of email notifications',
     tags: ['LLMs', 'Streamlit', 'Light-weight RAG', 'Speech-to-Text', 'API', 'Python'],
     repoUrl: 'https://github.com/vvsadi/SkySolveAI',
     embed: 'https://www.canva.com/design/DAGiexh94gM/uvnlnHe7tRhSBO49cFSL1g/view?embed',
@@ -23,8 +23,8 @@ export const projects = [
     id: 'financial',
     title: 'Financial Time-Series',
     category: 'Personal',
-    description:
-      'Deep analysis of financial datasets using Python and Pandas to identify market trends and correlations.',
+    card_description: 'Deep analysis of financial datasets using Python and Pandas to identify market trends and correlations.',
+    description:'Deep analysis of financial datasets using Python and Pandas to identify market trends and correlations.',
     tags: ['Python', 'Pandas', 'Viz'],
     repoUrl: 'https://github.com/vvsadi/EDA-with-Stock-Time-Series-Data',
   },
@@ -32,6 +32,7 @@ export const projects = [
     id: 'airsync',
     title: 'AirSync - New Product Idea',
     category: 'Academic',
+    card_description: 'Product idea for effective utilization of unused airline miles.',
     description:
       'Product idea for effective utilization of unused airline miles.',
     tags: ['Product Strategy', 'Market Research', 'Business Model', 'Value Proposition'],
@@ -41,7 +42,8 @@ export const projects = [
   {
     id: 'hackathon',
     title: 'Product Hackathon - AI Governance',
-    category: 'Academic',
+    category: 'Hackathon',
+    card_description: 'Product idea for effective AI governance, data visibility, and trust in e-commerce platforms.',
     description:
       'Product idea for effective AI governance, data visibility, and trust in e-commerce platforms.',
     tags: ['Product Strategy', 'Market Research', 'Business Model', 'Value Proposition'],
@@ -52,7 +54,8 @@ export const projects = [
     id: 'azure-data-factory-1',
     title: 'Metadata-Driven Multi-Table ETL Pipeline in Azure Data Factory',
     category: 'Personal',
-    description: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory supporting Incremental and Full Data Loads. Use Case: \nA company has multiple tables in SQL Server:\n• Customers\n• Orders\n• Products\n\nSteps:\n1. Load all tables to Azure Data Lake Storage Gen2.\n2. Support both Full Load and Incremental Load.\n3. Avoid creating separate pipelines for each table.\n4. Track row counts and execution status.\n5. Automatically update watermark values.',
+    card_description: 'Metadata-Driven Multi-Table Incremental ETL Pipeline in Azure Data Factory supporting Incremental and Full Data Loads.',
+    description: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory supporting Incremental and Full Data Loads. \nUse Case: \nA company has multiple tables in SQL Server:\n• Customers\n• Orders\n• Products\n\nSteps:\n1. Load all tables to Azure Data Lake Storage Gen2.\n2. Support both Full Load and Incremental Load.\n3. Avoid creating separate pipelines for each table.\n4. Track row counts and execution status.\n5. Automatically update watermark values.',
     tags: ['Data Engineering', 'Azure Data Factory', 'SQL Server', 'Azure Data Lake Storage Gen2'],
     repoUrl: 'https://github.com/vvsadi/azure_data_eng_proj_ADF',
   },
@@ -60,6 +63,7 @@ export const projects = [
     id: 'expense-mgmt',
     title: 'Expense Management Application',
     category: 'Personal',
+    card_description: 'Expense management application with features like expense tracking, category management, and reporting.',
     description: 'Expense management application with features like expense tracking, category management, and reporting."',
     tags: ['React.js', 'Flask', 'REST API', 'Figma', 'Product Development', 'UI/UX Design', 'DBMS'],
     repoUrl: 'https://github.com/vvsadi/azure_data_eng_proj_ADF',
@@ -68,6 +72,7 @@ export const projects = [
     id: 'Text2SQL-1',
     title: 'Text to SQL Query and Insights Chat Interface with Semantic Caching',
     category: 'Work',
+    card_description: 'Text to SQL Query and Insights Chat Interface with Semantic Caching',
     description: 'Generate SQL queries from Natural Language using LLMs and Knowledge Graphs with business ontologies, and generate insight summaries for business users.',
     tags: ['Data Engineering', 'neo4j', 'AutoGen', 'Semantic Caching', 'Knowledge Graphs', 'LLMs', 'Business Ontologies', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
   },
@@ -75,6 +80,7 @@ export const projects = [
     id: 'Text2SQL-2',
     title: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
     category: 'Work',
+    card_description: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
     description: 'A Benchmarking Harness for evaluating three retrieval architectures - Semantic Search, Knowledge Graph Retrieval, and Full Schema Prompting to measure Execution Accuracy using BIRD Standards and Token Consumption metrics in each retrieval architecture for the same natural language user query.Informs architectural decision making in AI systems.',
     tags: ['Data Engineering', 'neo4j', 'Knowledge Graphs', 'LiteLLM', 'LLMs', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
   },
@@ -82,6 +88,7 @@ export const projects = [
     id: 'Text2SQL-3',
     title: 'AIFinOps Assistant',
     category: 'Work',
+    card_description: 'AIFinOps Assistant',
     description: 'An AIFinOps assistant for tracking token consumption and LLM usage with dynamic model routing based on query complexity,using Semantic Caching, Knowledge Graphs, Ontologies, RAG pipelines, and Zero-shot Classification Models.',
     tags: ['Data Engineering', 'neo4j', 'AutoGen', 'Semantic Caching', 'Knowledge Graphs', 'LLMs', 'Business Ontologies', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
   },
@@ -91,6 +98,7 @@ export const caseStudies = [
   {
     id: 'apple',
     title: 'Apple',
+    card_description: 'End to end case study on Apple\'s Product Portfolio, Strategy, and Business Model.',
     description:
       'End to end case study on Apple\'s Product Portfolio, Strategy, and Business Model.',
     tags: ['Product Strategy', 'Market Research', 'Business Model', 'History, Growth, and Failures'],
@@ -99,6 +107,7 @@ export const caseStudies = [
   {
     id: 'hyperloop',
     title: 'Hyperloop',
+    card_description: 'End to end case study on Hyperloop\'s Product Portfolio, Strategy, and Business Model.',
     description:
       'End to end case study on Hyperloop\'s Product Portfolio, Strategy, and Business Model.',
     tags: ['Product Strategy', 'Market Research', 'Business Model', 'History, Growth, and Failures'],
@@ -107,6 +116,7 @@ export const caseStudies = [
   {
     id: 'spotify',
     title: 'Spotify Teardown',
+    card_description: 'Product breakdown of Spotify\'s Portfolio, Strategy, Market Research, and Business Model.',
     description:
       'Product breakdown of Spotify\'s Portfolio, Strategy, Market Research, and Business Model.',
     tags: ['Product Canvas', 'Product Strategy', 'Market Research', 'Future Enhancements'],

@@ -38,7 +38,8 @@ export default function Skills() {
                     fontSize: 15,
                     padding: '10px 0',
                     borderTop: '1px solid var(--line)',
-                    color: 'var(--muted)',
+                    color: 'var(--ink)',
+                    opacity: 0.82,
                   }}
                 >
                   {it}
