@@ -78,7 +78,9 @@ export default function Projects() {
                 }}
               >
                 <Link to={`/projects/${p.id}`} style={{ color: 'var(--ink)' }}>View project →</Link>
-                <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)' }}>View GitHub ↗</a>
+                {p.repoUrl && p.repoUrl !== '#' && (
+                  <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)' }}>View GitHub ↗</a>
+                )}
               </div>
             </div>
           ))}
