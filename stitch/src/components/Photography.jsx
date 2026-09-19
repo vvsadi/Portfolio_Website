@@ -1,21 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import BlogLayout from './BlogLayout';
-import captions from '../data/photoMeta';
-
-const imageModules = import.meta.glob('../assets/photos/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default' });
-
-const PHOTOS = Object.entries(imageModules).map(([path, src]) => {
-  const filename = path.split('/').pop();
-  return { id: filename, src, caption: captions[filename] || null };
-});
+import { usePhotos } from '../hooks/usePhotos';
 
 export default function Photography() {
-  const [likes, setLikes] = useState({});
+  const { photos, loading, addLike } = usePhotos();
   const [expanded, setExpanded] = useState(null);
-
-  const addLike = useCallback((id) => {
-    setLikes((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
-  }, []);
 
   return (
     <BlogLayout>
@@ -35,7 +24,9 @@ export default function Photography() {
           A running set of frames. Captured through my lens....
         </p>
 
-        {PHOTOS.length === 0 && (
+        {loading ? (
+          <p style={{ color: 'var(--muted)', fontSize: 15 }}>Loading...</p>
+        ) : photos.length === 0 ? (
           <p
             style={{
               fontFamily: "'JetBrains Mono', monospace",
@@ -46,74 +37,74 @@ export default function Photography() {
               textAlign: 'center',
             }}
           >
-            No photos yet — drop images into src/assets/photos/ to get started.
+            No photos yet.
           </p>
-        )}
+        ) : (
+          <div style={{ columns: 3, columnGap: 4 }}>
+            {photos.map((ph) => {
+              const likeCount = ph.likes || 0;
 
-        <div style={{ columns: 3, columnGap: 4 }}>
-          {PHOTOS.map((ph) => {
-            const likeCount = likes[ph.id] || 0;
-
-            return (
-              <div
-                key={ph.id}
-                data-reveal
-                className="group"
-                style={{
-                  breakInside: 'avoid',
-                  marginBottom: 4,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  background: 'var(--card)',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setExpanded(ph)}
-              >
-                <img
-                  src={ph.src}
-                  alt={ph.caption || ph.id}
-                  className="photo-tile-img"
+              return (
+                <div
+                  key={ph.id}
+                  data-reveal
+                  className="group"
                   style={{
-                    width: '100%',
-                    height: 'auto',
-                    display: 'block',
-                    transition: 'transform .5s cubic-bezier(.2,.7,.3,1)',
-                  }}
-                />
-
-                <button
-                  className="photo-tile-overlay"
-                  onClick={(e) => { e.stopPropagation(); addLike(ph.id); }}
-                  aria-label="Like"
-                  style={{
-                    position: 'absolute',
-                    top: 12,
-                    right: 12,
-                    zIndex: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 5,
-                    border: `1px solid ${likeCount ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.45)'}`,
-                    background: likeCount ? 'rgba(255,255,255,.95)' : 'rgba(0,0,0,.35)',
-                    color: likeCount ? '#e0245e' : '#fff',
-                    padding: '7px 12px',
+                    breakInside: 'avoid',
+                    marginBottom: 4,
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: 'var(--card)',
                     cursor: 'pointer',
-                    fontSize: 13,
-                    fontWeight: 700,
-                    backdropFilter: 'blur(6px)',
-                    borderRadius: 999,
-                    opacity: 0,
-                    transition: 'opacity .2s ease, transform .2s ease, background .15s ease',
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  onClick={() => setExpanded(ph)}
                 >
-                  {likeCount ? '❤️' : '🤍'} {likeCount || ''}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+                  <img
+                    src={ph.storage_url}
+                    alt={ph.caption || ph.filename}
+                    className="photo-tile-img"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      display: 'block',
+                      transition: 'transform .5s cubic-bezier(.2,.7,.3,1)',
+                    }}
+                  />
+
+                  <button
+                    className="photo-tile-overlay"
+                    onClick={(e) => { e.stopPropagation(); addLike(ph.id); }}
+                    aria-label="Like"
+                    style={{
+                      position: 'absolute',
+                      top: 12,
+                      right: 12,
+                      zIndex: 2,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 5,
+                      border: `1px solid ${likeCount ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.45)'}`,
+                      background: likeCount ? 'rgba(255,255,255,.95)' : 'rgba(0,0,0,.35)',
+                      color: likeCount ? '#e0245e' : '#fff',
+                      padding: '7px 12px',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                      fontWeight: 700,
+                      backdropFilter: 'blur(6px)',
+                      borderRadius: 999,
+                      opacity: 0,
+                      transition: 'opacity .2s ease, transform .2s ease, background .15s ease',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    {likeCount ? '❤️' : '🤍'} {likeCount || ''}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Lightbox */}
         {expanded && (
@@ -135,8 +126,8 @@ export default function Photography() {
             }}
           >
             <img
-              src={expanded.src}
-              alt={expanded.caption || expanded.id}
+              src={expanded.storage_url}
+              alt={expanded.caption || expanded.filename}
               onClick={(e) => e.stopPropagation()}
               style={{
                 maxWidth: '90vw',

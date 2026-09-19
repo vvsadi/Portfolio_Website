@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getAllPosts } from '../data/blogPosts';
+import { usePosts } from '../hooks/usePosts';
 import BlogLayout from './BlogLayout';
 
 function formatDate(dateStr) {
@@ -9,7 +9,7 @@ function formatDate(dateStr) {
 }
 
 export default function Writing() {
-  const posts = getAllPosts();
+  const { posts, loading } = usePosts();
 
   return (
     <BlogLayout>
@@ -29,7 +29,9 @@ export default function Writing() {
           Thoughts, learnings, and experiences — mostly about product, AI, and starting things before you feel ready.
         </p>
 
-        {posts.length === 0 ? (
+        {loading ? (
+          <p style={{ color: 'var(--muted)', fontSize: 15 }}>Loading...</p>
+        ) : posts.length === 0 ? (
           <p style={{ color: 'var(--muted)', fontSize: 15 }}>No posts yet.</p>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -52,7 +54,7 @@ export default function Writing() {
                 onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = '0'; }}
               >
                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--ink)' }}>
-                  {formatDate(po.date)}
+                  {formatDate(po.created_at)}
                 </span>
                 <div>
                   <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.03em', margin: '0 0 10px' }}>{po.title}</h2>

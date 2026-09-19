@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getPostBySlug } from '../data/blogPosts';
+import { usePost } from '../hooks/usePosts';
 import BlogLayout from './BlogLayout';
 
 function formatDate(dateStr) {
@@ -12,7 +12,17 @@ function formatDate(dateStr) {
 
 export default function WritingPost() {
   const { slug } = useParams();
-  const post = slug ? getPostBySlug(slug) : null;
+  const { post, loading, incrementLikes } = usePost(slug);
+
+  if (loading) {
+    return (
+      <BlogLayout>
+        <main style={{ padding: '72px 40px 0' }}>
+          <p style={{ color: 'var(--muted)', fontSize: 15 }}>Loading...</p>
+        </main>
+      </BlogLayout>
+    );
+  }
 
   if (!post) {
     return (
@@ -89,19 +99,49 @@ export default function WritingPost() {
             {post.title}
           </h1>
 
-          <p
+          <div
             style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 17,
-              fontWeight: 500,
-              color: 'var(--ink)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 20,
               margin: '0 0 40px',
               paddingBottom: 32,
               borderBottom: '1px solid var(--line)',
             }}
           >
-            {formatDate(post.date)}
-          </p>
+            <p
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 17,
+                fontWeight: 500,
+                color: 'var(--ink)',
+                margin: 0,
+              }}
+            >
+              {formatDate(post.created_at)}
+            </p>
+            <button
+              onClick={incrementLikes}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                border: '1px solid var(--line)',
+                background: 'transparent',
+                color: 'var(--ink)',
+                padding: '6px 14px',
+                borderRadius: 999,
+                cursor: 'pointer',
+                fontSize: 14,
+                fontWeight: 600,
+                transition: 'background .15s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--chip)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              ♥ {post.likes || 0}
+            </button>
+          </div>
 
           <article
             className="prose prose-slate dark:prose-invert max-w-none"

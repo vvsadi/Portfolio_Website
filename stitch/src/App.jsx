@@ -13,6 +13,10 @@ import BlogOverview from './components/BlogOverview';
 import Writing from './components/Writing';
 import WritingPost from './components/WritingPost';
 import Photography from './components/Photography';
+import AdminLayout from './components/AdminLayout';
+import AdminDashboard from './components/AdminDashboard';
+import AdminEditor from './components/AdminEditor';
+import AdminPhotos from './components/AdminPhotos';
 import { useScrollReveal } from './hooks/useScrollReveal';
 
 function ScrollToSection() {
@@ -71,6 +75,10 @@ function App() {
         <Route path="/blog/writing" element={<Writing />} />
         <Route path="/blog/writing/:slug" element={<WritingPost />} />
         <Route path="/blog/photography" element={<Photography />} />
+        <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+        <Route path="/admin/new" element={<AdminLayout><AdminEditor /></AdminLayout>} />
+        <Route path="/admin/edit/:id" element={<AdminLayout><AdminEditor /></AdminLayout>} />
+        <Route path="/admin/photos" element={<AdminLayout><AdminPhotos /></AdminLayout>} />
       </Routes>
     </Router>
   );
