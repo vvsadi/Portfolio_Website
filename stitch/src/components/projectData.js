@@ -48,6 +48,15 @@ export const projects = [
     repoUrl: '#',
     embed: 'https://www.canva.com/design/DAGVROMi6z8/OwkKG8RymZcS7xarZjDUag/view?embed',
   },
+  {
+    id: 'azure-data-factory-1',
+    title: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory',
+    category: 'Personal',
+    description: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory supporting Incremental and Full Data Loads. Use Case: \nA company has multiple tables in SQL Server:\n• Customers\n• Orders\n• Products\n\nSteps:\n1. Load all tables to Azure Data Lake Storage Gen2.\n2. Support both Full Load and Incremental Load.\n3. Avoid creating separate pipelines for each table.\n4. Track row counts and execution status.\n5. Automatically update watermark values.',
+    tags: ['Product Strategy', 'Market Research', 'Business Model', 'Value Proposition'],
+    repoUrl: '#',
+    embed: 'https://www.canva.com/design/DAGVROMi6z8/OwkKG8RymZcS7xarZjDUag/view?embed',
+  },
 ];
 
 export const caseStudies = [
