@@ -48,7 +48,7 @@ export default function Projects() {
               >
                 {p.title}
               </Link>
-              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1 }}>{p.description}</p>
+              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1, whiteSpace: 'pre-line' }}>{p.description}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {p.tags.map((t) => (
                   <span
@@ -126,7 +126,7 @@ export default function Projects() {
                 />
               </div>
               <div style={{ padding: '20px 22px 24px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-                <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1 }}>{c.description}</p>
+                <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.55, margin: 0, flex: 1, whiteSpace: 'pre-line' }}>{c.description}</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {c.tags.map((t) => (
                     <span

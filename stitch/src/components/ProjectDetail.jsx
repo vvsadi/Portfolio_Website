@@ -45,7 +45,7 @@ export default function ProjectDetail() {
         {project.title}
       </h1>
 
-      <p style={{ fontSize: 20, color: 'var(--muted)', lineHeight: 1.55, margin: '0 0 24px', maxWidth: '60ch' }}>
+      <p style={{ fontSize: 20, color: 'var(--muted)', lineHeight: 1.55, margin: '0 0 24px', maxWidth: '60ch', whiteSpace: 'pre-line' }}>
         {project.description}
       </p>
 
