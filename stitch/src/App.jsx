@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
@@ -13,11 +13,12 @@ import BlogOverview from './components/BlogOverview';
 import Writing from './components/Writing';
 import WritingPost from './components/WritingPost';
 import Photography from './components/Photography';
-import AdminLayout from './components/AdminLayout';
-import AdminDashboard from './components/AdminDashboard';
-import AdminEditor from './components/AdminEditor';
-import AdminPhotos from './components/AdminPhotos';
 import { useScrollReveal } from './hooks/useScrollReveal';
+
+const AdminLayout = lazy(() => import('./components/AdminLayout'));
+const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
+const AdminEditor = lazy(() => import('./components/AdminEditor'));
+const AdminPhotos = lazy(() => import('./components/AdminPhotos'));
 
 function ScrollToSection() {
   const location = useLocation();
@@ -64,6 +65,14 @@ function ProjectPage() {
   );
 }
 
+function AdminFallback() {
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--paper)' }}>
+      <p style={{ color: 'var(--muted)', fontSize: 15 }}>Loading...</p>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
@@ -75,10 +84,10 @@ function App() {
         <Route path="/blog/writing" element={<Writing />} />
         <Route path="/blog/writing/:slug" element={<WritingPost />} />
         <Route path="/blog/photography" element={<Photography />} />
-        <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
-        <Route path="/admin/new" element={<AdminLayout><AdminEditor /></AdminLayout>} />
-        <Route path="/admin/edit/:id" element={<AdminLayout><AdminEditor /></AdminLayout>} />
-        <Route path="/admin/photos" element={<AdminLayout><AdminPhotos /></AdminLayout>} />
+        <Route path="/admin" element={<Suspense fallback={<AdminFallback />}><AdminLayout><AdminDashboard /></AdminLayout></Suspense>} />
+        <Route path="/admin/new" element={<Suspense fallback={<AdminFallback />}><AdminLayout><AdminEditor /></AdminLayout></Suspense>} />
+        <Route path="/admin/edit/:id" element={<Suspense fallback={<AdminFallback />}><AdminLayout><AdminEditor /></AdminLayout></Suspense>} />
+        <Route path="/admin/photos" element={<Suspense fallback={<AdminFallback />}><AdminLayout><AdminPhotos /></AdminLayout></Suspense>} />
       </Routes>
     </Router>
   );

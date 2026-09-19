@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--paper:#f2f1ed;--ink:#0f0f0f;--card:#ffffff;--line:#e3e1db;--muted:#57544e;--signal:#c4622d;--chip:#ebe9e3;--onInkLine:rgba(255,255,255,.32);--onInkMuted:rgba(255,255,255,.62);}
+:root[data-theme="dark"]{--paper:#100f0e;--ink:#f3f1ec;--card:#1a1917;--line:#2b2a26;--muted:#98948b;--signal:#e08a52;--chip:#232220;--onInkLine:rgba(0,0,0,.28);--onInkMuted:rgba(0,0,0,.6);}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:background .25s ease,color .25s ease}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--signal)}
+input,textarea,button{font-family:inherit}
+::placeholder{color:var(--muted)}
+.on-ink::placeholder{color:var(--onInkMuted)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes sign{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes penrun{0%{transform:translateX(0);opacity:1}90%{opacity:1}100%{transform:translateX(var(--penend,62px));opacity:0}}
+@keyframes underdraw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pagein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes menuin{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes zoomslow{from{transform:scale(1.06)}to{transform:scale(1)}}
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.16,.84,.24,1),transform .75s cubic-bezier(.16,.84,.24,1)}
+[data-reveal].shown{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="background:var(--paper);color:var(--ink);min-height:100vh;font-family:'Archivo',system-ui,sans-serif">
+
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+<header style="position:sticky;top:0;z-index:60;background:var(--paper);border-bottom:1px solid var(--line)">
+  <div style="max-width:1180px;margin:0 auto;padding:0 28px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px" aria-label="Home">
+      <span style="position:relative;display:inline-block;padding:6px 4px 8px">
+        <span style="display:inline-block;font-family:'Lucida Calligraphy','Lucida Handwriting',cursive;font-size:32px;font-weight:400;line-height:1;letter-spacing:-0.025em;color:var(--ink);animation:sign 1.25s cubic-bezier(.55,.05,.25,1) both">VVS</span>
+        <span style="position:absolute;left:4px;right:4px;bottom:2px;height:1.5px;background:var(--signal);transform-origin:left center;animation:underdraw .55s cubic-bezier(.6,.05,.2,1) 1.1s both"></span>
+        <span style="position:absolute;left:2px;bottom:1px;width:5px;height:5px;border-radius:50%;background:var(--signal);--penend:74px;animation:penrun 1.25s cubic-bezier(.55,.05,.25,1) both"></span>
+      </span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:30px;font-size:14px;font-weight:500">
+      <a href="#about" onClick="{{ goAbout }}" style="position:relative;padding-bottom:3px;transition:color .2s ease" style-hover="color:var(--signal)">About</a>
+      <a href="#experience" onClick="{{ goExperience }}" style="position:relative;padding-bottom:3px;transition:color .2s ease" style-hover="color:var(--signal)">Experience</a>
+      <a href="#work" onClick="{{ goWork }}" style="position:relative;padding-bottom:3px;transition:color .2s ease" style-hover="color:var(--signal)">Projects</a>
+      <a href="#" onClick="{{ goBlog }}" style="position:relative;padding-bottom:3px;transition:color .2s ease" style-hover="color:var(--signal)">Blog</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:40px;height:40px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px">{{ themeIcon }}</button>
+      <a href="#contact" onClick="{{ goContact }}" style="background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:999px;font-size:14px;font-weight:600">Contact</a>
+    </div>
+  </div>
+</header>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="max-width:1180px;margin:0 auto;padding:76px 28px 88px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:end">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);background:var(--ink);padding:9px 16px;border-radius:999px;margin-bottom:30px;animation:rise .7s cubic-bezier(.2,.7,.3,1) .05s both">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--signal);display:inline-block"></span>
+        Available for new opportunities
+      </div>
+      <h1 style="font-size:clamp(56px,8.2vw,104px);line-height:.92;font-weight:700;letter-spacing:-0.045em;margin:0 0 28px;animation:rise .8s cubic-bezier(.2,.7,.3,1) .15s both">Aditya<br/>Vemparala</h1>
+      <p style="font-size:22px;font-weight:600;margin:0 0 16px;max-width:34ch;line-height:1.3;animation:rise .8s cubic-bezier(.2,.7,.3,1) .28s both">Product owner building intelligent products at the seam of AI, data, and business.</p>
+      <p style="font-size:17px;color:var(--muted);margin:0 0 36px;max-width:52ch;line-height:1.6;animation:rise .8s cubic-bezier(.2,.7,.3,1) .38s both">Consulting, business analysis, and product ownership — translating complex business problems into practical digital solutions.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;animation:rise .8s cubic-bezier(.2,.7,.3,1) .48s both">
+        <a href="#" style="background:var(--ink);color:var(--paper);padding:15px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.18)">Download résumé</a>
+        <a href="https://www.linkedin.com/in/aditya-v-v-s-b7614a13a/" target="_blank" rel="noopener noreferrer" style="border:1px solid var(--line);padding:15px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .2s ease,border-color .2s ease" style-hover="transform:translateY(-2px);border-color:var(--ink)">LinkedIn</a>
+      </div>
+    </div>
+    <div style="position:relative;animation:rise .9s cubic-bezier(.2,.7,.3,1) .3s both">
+      <div style="position:absolute;right:-14px;bottom:-14px;width:78%;height:78%;background:var(--ink);border-radius:8px"></div>
+      <div style="position:relative;width:100%;aspect-ratio:4/5">
+        <div style="{{ cardStyle0 }}">
+          <img src="assets/aditya.jpeg" alt="Aditya Vemparala" style="width:100%;height:100%;object-fit:cover;display:block"/>
+        </div>
+        <sc-for list="{{ photoCards }}" as="pc" hint-placeholder-count="3">
+          <div style="{{ pc.style }}">
+            <div style="width:100%;height:100%;background:repeating-linear-gradient(135deg,var(--chip) 0 12px,transparent 12px 24px);display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">{{ pc.label }}</span>
+            </div>
+          </div>
+        </sc-for>
+        <div style="position:absolute;left:14px;bottom:14px;z-index:9;display:flex;gap:8px">
+          <button onClick="{{ prevPhoto }}" aria-label="Previous photo" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(15,15,15,.42);backdrop-filter:blur(8px);color:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .2s ease" style-hover="background:rgba(15,15,15,.78)">←</button>
+          <button onClick="{{ nextPhoto }}" aria-label="Next photo" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(15,15,15,.42);backdrop-filter:blur(8px);color:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .2s ease" style-hover="background:rgba(15,15,15,.78)">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div style="max-width:1180px;margin:0 auto;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);flex-shrink:0">Worked with</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:48px;flex:1;flex-wrap:wrap">
+        <img src="assets/oracle.png" alt="Oracle" style="height:64px;width:auto;object-fit:contain;opacity:.85"/>
+        <img src="assets/bmo.png" alt="Bank of Montreal" style="height:48px;width:auto;object-fit:contain;opacity:.85"/>
+        <img src="assets/radiant-logo.png" alt="Radiant Digital" style="height:48px;width:auto;object-fit:contain;opacity:.85"/>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-reveal style="max-width:1180px;margin:0 auto;padding:92px 28px 0">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px">
+      <div>
+        <h2 style="font-size:clamp(34px,4.4vw,52px);font-weight:700;letter-spacing:-0.035em;margin:0">Projects</h2>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+        <div data-reveal style="display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:26px;gap:14px;transition:border-color .18s ease" style-hover="border-color:var(--ink)">
+          <span style="align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--chip);color:var(--ink);font-weight:500">{{ p.category }}</span>
+          <a href="#" onClick="{{ p.open }}" style="font-size:26px;font-weight:700;letter-spacing:-0.03em;color:var(--ink);line-height:1.15">{{ p.title }}</a>
+          <p style="font-size:15px;color:var(--muted);line-height:1.55;margin:0;flex:1">{{ p.description }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="3"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)">{{ t }}</span></sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:18px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600">
+            <a href="#" onClick="{{ p.open }}">View project →</a>
+            <a href="{{ p.repoUrl }}" target="_blank" rel="noopener noreferrer" style="color:var(--muted)">View GitHub ↗</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-reveal style="max-width:1180px;margin:0 auto;padding:76px 28px 0">
+    <div style="margin-bottom:32px">
+      <h2 style="font-size:clamp(34px,4.4vw,52px);font-weight:700;letter-spacing:-0.035em;margin:0">Case studies</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+      <sc-for list="{{ caseStudies }}" as="c" hint-placeholder-count="3">
+        <div data-reveal style="background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s cubic-bezier(.2,.7,.3,1),border-color .25s ease" style-hover="transform:translateY(-4px);border-color:var(--ink)">
+          <div style="padding:22px 22px 16px">
+            <h3 style="font-size:23px;font-weight:700;letter-spacing:-0.025em;margin:0;color:var(--ink)">{{ c.title }}</h3>
+          </div>
+          <div style="padding:0 22px">
+            <iframe src="{{ c.embed }}" title="{{ c.title }}" loading="lazy" allowFullScreen="{{ true }}" style="width:100%;aspect-ratio:16/10;border:1px solid var(--line);border-radius:8px;display:block;background:var(--chip)"></iframe>
+          </div>
+          <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:14px;flex:1">
+            <p style="font-size:15px;color:var(--muted);line-height:1.55;margin:0;flex:1">{{ c.description }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ c.tags }}" as="t" hint-placeholder-count="3"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)">{{ t }}</span></sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="about" data-reveal style="max-width:1180px;margin:0 auto;padding:100px 28px 0">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px">
+      <div>
+        <h2 style="font-size:clamp(34px,4.4vw,52px);font-weight:700;letter-spacing:-0.035em;margin:0 0 26px">I sit between technology, data, and business.</h2>
+        <p style="font-size:17px;line-height:1.65;color:var(--muted);margin:0 0 16px">Hi, I'm Aditya. With experience in Consulting, Business Analysis, technical solution ideation, and product ownership, I enjoy translating complex business problems into practical digital solutions.</p>
+        <p style="font-size:17px;line-height:1.65;color:var(--muted);margin:0">My approach combines structured problem solving with data-driven insights, technical curiosity, and product thinking to ensure that every feature built aligns with real user needs and clear business outcomes.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div>
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 18px">Education &amp; honors</h3>
+          <div style="display:flex;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)">
+            <img src="assets/UTD.png" alt="UTD" style="width:40px;height:40px;object-fit:contain;flex-shrink:0"/>
+            <div>
+              <h4 style="font-size:17px;font-weight:700;margin:0">MS in IT &amp; Management</h4>
+              <p style="font-size:14px;color:var(--muted);margin:3px 0 10px">The University of Texas at Dallas · GPA 3.888</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:var(--chip);border:1px solid var(--line);color:var(--ink);font-weight:500;border-radius:999px">Beta Gamma Sigma</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:var(--chip);border:1px solid var(--line);color:var(--ink);font-weight:500;border-radius:999px">Dean's Council</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:var(--chip);border:1px solid var(--line);color:var(--ink);font-weight:500;border-radius:999px">Student Leadership Council</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:var(--chip);border:1px solid var(--line);color:var(--ink);font-weight:500;border-radius:999px">Nash Leader</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;background:var(--chip);border:1px solid var(--line);color:var(--ink);font-weight:500;border-radius:999px">Impact Award</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;padding-top:22px">
+            <img src="assets/VIT.png" alt="VIT" style="width:40px;height:40px;object-fit:contain;flex-shrink:0"/>
+            <div>
+              <h4 style="font-size:17px;font-weight:700;margin:0">B.Tech, Electronics &amp; Communication Engineering</h4>
+              <p style="font-size:14px;color:var(--muted);margin:3px 0 0">Vellore Institute of Technology · GPA 8.14</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 18px">Certifications</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+            <a href="#" data-reveal style="border:1px solid var(--line);border-radius:10px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;background:var(--card);transition:transform .25s cubic-bezier(.2,.7,.3,1),border-color .25s ease" style-hover="transform:translateY(-3px);border-color:var(--ink)">
+              <img src="assets/CSPO.png" alt="Certified Scrum Product Owner" style="width:56px;height:56px;object-fit:contain"/>
+              <span style="font-size:12px;font-weight:600;line-height:1.35">Certified Scrum Product Owner</span>
+            </a>
+            <a href="#" data-reveal style="border:1px solid var(--line);border-radius:10px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;background:var(--card);transition:transform .25s cubic-bezier(.2,.7,.3,1),border-color .25s ease" style-hover="transform:translateY(-3px);border-color:var(--ink)">
+              <img src="assets/OCI-AI.png" alt="OCI AI Foundations Associate" style="width:56px;height:56px;object-fit:contain"/>
+              <span style="font-size:12px;font-weight:600;line-height:1.35">OCI AI Foundations Associate</span>
+            </a>
+            <a href="#" data-reveal style="border:1px solid var(--line);border-radius:10px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;background:var(--card);transition:transform .25s cubic-bezier(.2,.7,.3,1),border-color .25s ease" style-hover="transform:translateY(-3px);border-color:var(--ink)">
+              <img src="assets/OCI-Foundations.png" alt="OCI Foundations Associate" style="width:56px;height:56px;object-fit:contain"/>
+              <span style="font-size:12px;font-weight:600;line-height:1.35">OCI Foundations Associate</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" data-reveal style="max-width:1180px;margin:0 auto;padding:100px 28px 0">
+    <h2 style="font-size:clamp(34px,4.4vw,52px);font-weight:700;letter-spacing:-0.035em;margin:0 0 44px">Where I've worked</h2>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ roles }}" as="r" hint-placeholder-count="4">
+        <div data-reveal style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;padding:30px 0;border-top:1px solid var(--line);transition:padding-left .25s cubic-bezier(.2,.7,.3,1)" style-hover="padding-left:14px">
+          <div>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;color:var(--ink);margin:0 0 8px">{{ r.dates }}</p>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin:0">{{ r.type }}</p>
+          </div>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+              <h3 style="font-size:24px;font-weight:700;letter-spacing:-0.02em;margin:0">{{ r.role }}</h3>
+              <span style="font-size:16px;color:var(--muted)">{{ r.company }}</span>
+            </div>
+            <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:15px;line-height:1.55">
+              <sc-for list="{{ r.points }}" as="pt" hint-placeholder-count="3"><li>{{ pt }}</li></sc-for>
+            </ul>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="skills" data-reveal style="max-width:1180px;margin:0 auto;padding:100px 28px 0">
+    <h2 style="font-size:clamp(34px,4.4vw,52px);font-weight:700;letter-spacing:-0.035em;margin:0 0 40px">Skills</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+      <sc-for list="{{ skillGroups }}" as="g" hint-placeholder-count="3">
+        <div data-reveal style="border:1px solid var(--line);border-radius:10px;padding:28px;background:var(--card)">
+          <h3 style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin:0 0 20px">{{ g.name }}</h3>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="5">
+              <div style="font-size:15px;padding:10px 0;border-top:1px solid var(--line);color:var(--muted)">{{ it }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="contact" data-reveal style="max-width:1180px;margin:0 auto;padding:110px 28px 0">
+    <div style="background:var(--ink);color:var(--paper);border-radius:14px;padding:64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px">
+      <div>
+        <h2 style="font-size:clamp(34px,4.4vw,54px);font-weight:700;letter-spacing:-0.035em;margin:0 0 20px;line-height:1">Let's talk.</h2>
+        <p style="font-size:17px;line-height:1.6;opacity:.72;margin:0 0 36px;max-width:40ch">Interested in collaborating on a product or discussing the latest in AI? I'm always open to talking shop.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;font-size:16px">
+          <a href="mailto:adityavemparalausa@gmail.com" style="color:var(--paper);border-bottom:1px solid var(--onInkLine);padding-bottom:10px">adityavemparalausa@gmail.com</a>
+          <a href="https://github.com/vvsadi" target="_blank" rel="noopener noreferrer" style="color:var(--paper);border-bottom:1px solid var(--onInkLine);padding-bottom:10px">github.com/vvsadi</a>
+          <span style="opacity:.72;padding-bottom:10px">+1 (945) 251-3495</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <input placeholder="Name" style="background:transparent;border:1px solid var(--onInkLine);border-radius:8px;padding:15px 16px;color:var(--paper);font-size:15px;width:100%;box-sizing:border-box" class="on-ink"/>
+          <input placeholder="Email" style="background:transparent;border:1px solid var(--onInkLine);border-radius:8px;padding:15px 16px;color:var(--paper);font-size:15px;width:100%;box-sizing:border-box" class="on-ink"/>
+        </div>
+        <textarea rows="6" placeholder="What's on your mind?" style="background:transparent;border:1px solid var(--onInkLine);border-radius:8px;padding:15px 16px;color:var(--paper);font-size:15px;width:100%;box-sizing:border-box;resize:vertical" class="on-ink"></textarea>
+        <button style="background:var(--paper);color:var(--ink);border:0;border-radius:999px;padding:16px;font-size:15px;font-weight:700;cursor:pointer">Send message</button>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+<main style="max-width:900px;margin:0 auto;padding:64px 28px 0">
+  <a href="#" onClick="{{ goHome }}" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">← Back to projects</a>
+  <h1 style="font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-0.04em;line-height:1;margin:28px 0 20px">{{ current.title }}</h1>
+  <p style="font-size:20px;color:var(--muted);line-height:1.55;margin:0 0 24px;max-width:60ch">{{ current.description }}</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:40px">
+    <sc-for list="{{ current.tags }}" as="t" hint-placeholder-count="3"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)">{{ t }}</span></sc-for>
+  </div>
+  <sc-if value="{{ hasEmbed }}" hint-placeholder-val="{{ true }}">
+    <iframe src="{{ current.embed }}" title="{{ current.title }}" loading="lazy" allowFullScreen="{{ true }}" style="width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:10px;display:block;background:var(--chip)"></iframe>
+  </sc-if>
+  <sc-if value="{{ noEmbed }}" hint-placeholder-val="{{ false }}">
+    <div style="aspect-ratio:16/9;border:1px dashed var(--line);border-radius:10px;background:repeating-linear-gradient(135deg,var(--chip) 0 12px,transparent 12px 24px);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">deck or screenshots go here</div>
+  </sc-if>
+  <div style="display:flex;gap:12px;margin-top:28px">
+    <a href="{{ current.repoUrl }}" target="_blank" rel="noopener noreferrer" style="background:var(--ink);color:var(--paper);padding:14px 24px;border-radius:999px;font-weight:600;font-size:15px">View repository</a>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBlog }}" hint-placeholder-val="{{ false }}">
+<main style="animation:pagein .5s cubic-bezier(.2,.8,.3,1) both">
+  <section style="position:relative;height:100vh;min-height:560px;display:flex;align-items:flex-end;overflow:hidden">
+    <!-- BANNER IMAGE: replace the background below with url('assets/blog-banner.jpg') -->
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2a2926 0 14px,#201f1d 14px 28px);background-size:cover;background-position:center;animation:zoomslow 1.6s cubic-bezier(.2,.8,.3,1) both"></div>
+    <span style="position:absolute;bottom:18px;right:24px;z-index:11;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)">banner image — set in code</span>
+    <a href="#" onClick="{{ goHome }}" aria-label="Home" style="position:absolute;top:24px;left:28px;z-index:12;display:inline-block">
+      <span style="font-family:'Lucida Calligraphy','Lucida Handwriting',cursive;font-size:32px;line-height:1;letter-spacing:-0.025em;color:#fff">VVS</span>
+    </a>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,7,.92) 0%,rgba(8,8,7,.6) 38%,rgba(8,8,7,.1) 72%,rgba(8,8,7,.28) 100%);pointer-events:none"></div>
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:24px;right:24px;z-index:12;width:48px;height:48px;border:1px solid rgba(255,255,255,.5);background:rgba(15,15,15,.38);backdrop-filter:blur(8px);border-radius:10px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px" style-hover="background:rgba(15,15,15,.78)">
+      <span style="display:block;width:20px;height:1.5px;background:#fff"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#fff"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#fff"></span>
+    </button>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:82px;right:24px;z-index:13;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:210px;box-shadow:0 24px 48px rgba(0,0,0,.22);animation:menuin .22s cubic-bezier(.2,.8,.3,1) both;display:flex;flex-direction:column">
+        <a href="#about" onClick="{{ goAbout }}" style="padding:12px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">About</a>
+        <a href="#experience" onClick="{{ goExperience }}" style="padding:12px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Experience</a>
+        <a href="#work" onClick="{{ goWork }}" style="padding:12px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Projects</a>
+        <a href="#" onClick="{{ goBlog }}" style="padding:12px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Blog</a>
+      </div>
+    </sc-if>
+    <div style="position:relative;z-index:11;max-width:1180px;margin:0 auto;padding:0 28px 86px;width:100%;box-sizing:border-box">
+      <h1 style="font-size:clamp(44px,7vw,88px);font-weight:700;letter-spacing:-0.04em;line-height:.95;margin:0 0 22px;color:#fff;animation:rise .8s cubic-bezier(.2,.7,.3,1) .15s both">Notes &amp; frames</h1>
+      <p style="font-size:20px;line-height:1.6;color:rgba(255,255,255,.9);max-width:60ch;margin:0 0 38px;animation:rise .8s cubic-bezier(.2,.7,.3,1) .28s both">Hi! Welcome to my Blog! I share my thoughts, learnings, experiences, and.... some photography skills!</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;animation:rise .8s cubic-bezier(.2,.7,.3,1) .4s both">
+        <a href="#" onClick="{{ goWriting }}" style="border:1.5px solid rgba(255,255,255,.8);background:transparent;color:#fff;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:700;transition:transform .22s cubic-bezier(.2,.8,.3,1),background .22s ease,color .22s ease" style-hover="transform:translateY(-3px);background:#fff;color:#0f0f0f">Writing</a>
+        <a href="#" onClick="{{ goPhoto }}" style="border:1.5px solid rgba(255,255,255,.8);background:transparent;color:#fff;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:700;transition:transform .22s cubic-bezier(.2,.8,.3,1),background .22s ease,color .22s ease" style-hover="transform:translateY(-3px);background:#fff;color:#0f0f0f">Photography</a>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isWriting }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:{{ sideCols }} minmax(0,1fr);gap:0;transition:grid-template-columns .3s cubic-bezier(.2,.8,.3,1);animation:pagein .45s cubic-bezier(.2,.8,.3,1) both">
+  <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:fixed;top:22px;right:24px;z-index:70;width:46px;height:46px;border:1px solid var(--line);background:var(--paper);border-radius:10px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 18px rgba(0,0,0,.10);transition:background .18s ease" style-hover="background:var(--chip)">
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+  </button>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:78px;right:24px;z-index:71;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:200px;box-shadow:0 24px 48px rgba(0,0,0,.22);animation:menuin .22s cubic-bezier(.2,.8,.3,1) both;display:flex;flex-direction:column">
+      <a href="#about" onClick="{{ goAbout }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">About</a>
+      <a href="#experience" onClick="{{ goExperience }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Experience</a>
+      <a href="#work" onClick="{{ goWork }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Projects</a>
+      <a href="#" onClick="{{ goBlog }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Blog</a>
+    </div>
+  </sc-if>
+
+  <aside style="{{ asideStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" aria-label="Home" style="display:inline-block">
+          <span style="font-family:'Lucida Calligraphy','Lucida Handwriting',cursive;font-size:28px;color:var(--ink)">VVS</span>
+        </a>
+      </sc-if>
+      <button onClick="{{ toggleSide }}" aria-label="Toggle menu" style="width:34px;height:34px;flex-shrink:0;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .18s ease" style-hover="background:var(--chip)">{{ sideIcon }}</button>
+    </div>
+    <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;flex-direction:column;gap:4px">
+        <a href="#" onClick="{{ goBlog }}" style="{{ navOverview }}">Overview</a>
+        <a href="#" onClick="{{ goWriting }}" style="{{ navWriting }}">Writing</a>
+        <a href="#" onClick="{{ goPhoto }}" style="{{ navPhotography }}">Photography</a>
+      </nav>
+    </sc-if>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:34px;height:34px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:50%;cursor:pointer;font-size:13px">{{ themeIcon }}</button>
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink);transition:color .18s ease" style-hover="color:var(--signal)">← Main site</a>
+      </sc-if>
+    </div>
+  </aside>
+  <main style="padding:72px 40px 0;max-width:1000px">
+    <h1 style="font-size:clamp(38px,5vw,64px);font-weight:700;letter-spacing:-0.04em;line-height:1;margin:0 0 18px">Writing</h1>
+    <p style="font-size:18px;color:var(--muted);max-width:56ch;margin:0 0 48px;line-height:1.6">Thoughts, learnings, and experiences — mostly about product, AI, and starting things before you feel ready.</p>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ posts }}" as="po" hint-placeholder-count="3">
+        <a href="#" onClick="{{ po.open }}" data-reveal style="display:grid;grid-template-columns:150px minmax(0,1fr) 96px;gap:28px;align-items:baseline;padding:30px 0;border-top:1px solid var(--line);transition:padding-left .25s cubic-bezier(.2,.7,.3,1)" style-hover="padding-left:14px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;color:var(--ink)">{{ po.date }}</span>
+          <div>
+            <h2 style="font-size:28px;font-weight:700;letter-spacing:-0.03em;margin:0 0 10px">{{ po.title }}</h2>
+            <p style="font-size:16px;color:var(--muted);line-height:1.6;margin:0;max-width:62ch">{{ po.excerpt }}</p>
+          </div>
+          <span style="font-size:14px;font-weight:600;text-align:right">Read →</span>
+        </a>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPost }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:{{ sideCols }} minmax(0,1fr);transition:grid-template-columns .3s cubic-bezier(.2,.8,.3,1);animation:pagein .45s cubic-bezier(.2,.8,.3,1) both">
+  <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:fixed;top:22px;right:24px;z-index:70;width:46px;height:46px;border:1px solid var(--line);background:var(--paper);border-radius:10px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 18px rgba(0,0,0,.10);transition:background .18s ease" style-hover="background:var(--chip)">
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+  </button>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:78px;right:24px;z-index:71;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:200px;box-shadow:0 24px 48px rgba(0,0,0,.22);animation:menuin .22s cubic-bezier(.2,.8,.3,1) both;display:flex;flex-direction:column">
+      <a href="#about" onClick="{{ goAbout }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">About</a>
+      <a href="#experience" onClick="{{ goExperience }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Experience</a>
+      <a href="#work" onClick="{{ goWork }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Projects</a>
+      <a href="#" onClick="{{ goBlog }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Blog</a>
+    </div>
+  </sc-if>
+
+  <aside style="{{ asideStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" aria-label="Home" style="display:inline-block">
+          <span style="font-family:'Lucida Calligraphy','Lucida Handwriting',cursive;font-size:28px;color:var(--ink)">VVS</span>
+        </a>
+      </sc-if>
+      <button onClick="{{ toggleSide }}" aria-label="Toggle menu" style="width:34px;height:34px;flex-shrink:0;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .18s ease" style-hover="background:var(--chip)">{{ sideIcon }}</button>
+    </div>
+    <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;flex-direction:column;gap:4px">
+        <a href="#" onClick="{{ goBlog }}" style="{{ navOverview }}">Overview</a>
+        <a href="#" onClick="{{ goWriting }}" style="{{ navWriting }}">Writing</a>
+        <a href="#" onClick="{{ goPhoto }}" style="{{ navPhotography }}">Photography</a>
+      </nav>
+    </sc-if>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:34px;height:34px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:50%;cursor:pointer;font-size:13px">{{ themeIcon }}</button>
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink);transition:color .18s ease" style-hover="color:var(--signal)">← Main site</a>
+      </sc-if>
+    </div>
+  </aside>
+<main style="padding:0">
+  <div style="position:relative;height:clamp(280px,42vh,420px);overflow:hidden;background:repeating-linear-gradient(135deg,var(--chip) 0 14px,transparent 14px 28px);border-bottom:1px solid var(--line)">
+    <!-- POST BANNER: replace background above with url('assets/post-name.jpg');background-size:cover -->
+    <span style="position:absolute;bottom:16px;right:20px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">post banner — set in code</span>
+  </div>
+  <div style="max-width:760px;padding:44px 40px 0">
+    <a href="#" onClick="{{ goWriting }}" style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--ink);transition:color .18s ease" style-hover="color:var(--signal)">← All writing</a>
+    <h1 style="font-size:clamp(38px,5.5vw,64px);font-weight:700;letter-spacing:-0.04em;line-height:1;margin:22px 0 14px">{{ current.title }}</h1>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;color:var(--ink);margin:0 0 40px;padding-bottom:32px;border-bottom:1px solid var(--line)">{{ current.date }}</p>
+    <div style="display:flex;flex-direction:column;gap:22px;font-size:18px;line-height:1.7;color:var(--ink)">
+      <sc-for list="{{ current.body }}" as="para" hint-placeholder-count="6"><p style="margin:0">{{ para }}</p></sc-for>
+    </div>
+  </div>
+</main>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPhoto }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:{{ sideCols }} minmax(0,1fr);transition:grid-template-columns .3s cubic-bezier(.2,.8,.3,1);animation:pagein .45s cubic-bezier(.2,.8,.3,1) both">
+  <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:fixed;top:22px;right:24px;z-index:70;width:46px;height:46px;border:1px solid var(--line);background:var(--paper);border-radius:10px;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 18px rgba(0,0,0,.10);transition:background .18s ease" style-hover="background:var(--chip)">
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+    <span style="display:block;width:18px;height:1.5px;background:var(--ink)"></span>
+  </button>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:78px;right:24px;z-index:71;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:200px;box-shadow:0 24px 48px rgba(0,0,0,.22);animation:menuin .22s cubic-bezier(.2,.8,.3,1) both;display:flex;flex-direction:column">
+      <a href="#about" onClick="{{ goAbout }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">About</a>
+      <a href="#experience" onClick="{{ goExperience }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Experience</a>
+      <a href="#work" onClick="{{ goWork }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Projects</a>
+      <a href="#" onClick="{{ goBlog }}" style="padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .15s ease" style-hover="background:var(--chip)">Blog</a>
+    </div>
+  </sc-if>
+
+  <aside style="{{ asideStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" aria-label="Home" style="display:inline-block">
+          <span style="font-family:'Lucida Calligraphy','Lucida Handwriting',cursive;font-size:28px;color:var(--ink)">VVS</span>
+        </a>
+      </sc-if>
+      <button onClick="{{ toggleSide }}" aria-label="Toggle menu" style="width:34px;height:34px;flex-shrink:0;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .18s ease" style-hover="background:var(--chip)">{{ sideIcon }}</button>
+    </div>
+    <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;flex-direction:column;gap:4px">
+        <a href="#" onClick="{{ goBlog }}" style="{{ navOverview }}">Overview</a>
+        <a href="#" onClick="{{ goWriting }}" style="{{ navWriting }}">Writing</a>
+        <a href="#" onClick="{{ goPhoto }}" style="{{ navPhotography }}">Photography</a>
+      </nav>
+    </sc-if>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:34px;height:34px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:50%;cursor:pointer;font-size:13px">{{ themeIcon }}</button>
+      <sc-if value="{{ sideOpen }}" hint-placeholder-val="{{ true }}">
+        <a href="#" onClick="{{ goHome }}" style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink);transition:color .18s ease" style-hover="color:var(--signal)">← Main site</a>
+      </sc-if>
+    </div>
+  </aside>
+<main style="padding:72px 40px 0">
+  <h1 style="font-size:clamp(38px,5vw,64px);font-weight:700;letter-spacing:-0.04em;line-height:1;margin:0 0 18px">Photography</h1>
+  <p style="font-size:18px;color:var(--muted);max-width:56ch;margin:0 0 24px;line-height:1.6">A running set of frames. Hover a photo for the caption; react if one lands.</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin:0 0 48px;padding:12px 16px;border:1px dashed var(--line);display:inline-block">placeholder frames — drop your real photos in later</p>
+  <div style="columns:3;column-gap:4px">
+    <sc-for list="{{ photos }}" as="ph" hint-placeholder-count="9">
+      <div data-reveal style="break-inside:avoid;margin-bottom:4px;position:relative;overflow:hidden;background:var(--card)">
+        <div style="width:100%;height:{{ ph.h }};background:repeating-linear-gradient(135deg,var(--chip) 0 11px,transparent 11px 22px);display:flex;align-items:center;justify-content:center;transition:transform .5s cubic-bezier(.2,.7,.3,1)" style-hover="transform:scale(1.04)">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">{{ ph.slot }}</span>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;opacity:0;transition:opacity .2s ease;background:linear-gradient(to top,rgba(10,10,9,.88) 0%,rgba(10,10,9,.55) 45%,rgba(10,10,9,.05) 100%)" style-hover="opacity:1">
+          <div style="position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:6px">
+            <button onClick="{{ ph.like }}" aria-label="Like" style="display:flex;align-items:center;gap:5px;border:1px solid {{ ph.upBorder }};background:{{ ph.upBg }};color:{{ ph.upColor }};padding:7px 12px;cursor:pointer;font-size:12px;font-weight:700;backdrop-filter:blur(6px)">👍 {{ ph.up }}</button>
+            <button onClick="{{ ph.dislike }}" aria-label="Dislike" style="display:flex;align-items:center;gap:5px;border:1px solid {{ ph.downBorder }};background:{{ ph.downBg }};color:{{ ph.downColor }};padding:7px 12px;cursor:pointer;font-size:12px;font-weight:700;backdrop-filter:blur(6px)">👎 {{ ph.down }}</button>
+          </div>
+          <h3 style="font-size:17px;font-weight:700;margin:0 0 5px;letter-spacing:-0.01em;color:#fff">{{ ph.title }}</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,.8);margin:0;line-height:1.5">{{ ph.caption }}</p>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</div>
+</sc-if>
+
+<sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
+<footer style="max-width:1180px;margin:110px auto 0;padding:40px 28px 56px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+  <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">© 2026 Aditya Vemparala</span>
+  <div style="display:flex;gap:22px;font-size:14px">
+    <a href="mailto:adityavemparalausa@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/aditya-v-v-s-b7614a13a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/vvsadi" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</footer>
+</sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const PROJECTS = [
+  { id:'feastit', category:'Academic', title:'FeastIT', embed:'https://www.canva.com/design/DAHDq0yE1fw/pcQpKY09HkvsLHnDhu7lOQ/view?embed', description:'A B2C food delivery prototype featuring order tracking and vendor management.', tags:['React.js','MySQL','Flask','REST API'], repoUrl:'https://github.com/vvsadi/FeastIT-Customer' },
+  { id:'skysolve', category:'Academic', title:'SkySolve — AI Assistant', embed:'https://www.canva.com/design/DAGiexh94gM/uvnlnHe7tRhSBO49cFSL1g/view?embed', description:'AI assistant that uses speech-to-text and NLP summarization for real-time customer support.', tags:['LLMs','Streamlit','RAG','Speech-to-Text','Python'], repoUrl:'#' },
+  { id:'financial', category:'Personal', title:'Financial Time-Series', description:'Deep analysis of financial datasets using Python and Pandas to identify market trends and correlations.', tags:['Python','Pandas','Viz'], repoUrl:'#' },
+  { id:'airsync', category:'Academic', title:'AirSync', embed:'https://www.canva.com/design/DAGV2ZANpGI/EGQ7dgiReukmCEyAEYvPDA/view?embed', description:'Product idea for effective utilization of unused airline miles.', tags:['Product Strategy','Market Research','Business Model'], repoUrl:'#' },
+  { id:'hackathon', category:'Academic', title:'AI Governance', embed:'https://www.canva.com/design/DAGVROMi6z8/OwkKG8RymZcS7xarZjDUag/view?embed', description:'Product idea for effective AI governance, data visibility, and trust in e-commerce platforms.', tags:['Product Strategy','Market Research','Value Proposition'], repoUrl:'#' }
+];
+const CASES = [
+  { id:'apple', title:'Apple', embed:'https://www.canva.com/design/DAF90BLGq7Y/1J-3wTw-o7fYpHND-Xrhkg/view?embed', description:'End to end case study on Apple\u2019s product portfolio, strategy, and business model.', tags:['Product Strategy','Market Research','Business Model'] },
+  { id:'hyperloop', title:'Hyperloop', embed:'https://www.canva.com/design/DAGC-i7tZ3o/a2W_kOcfWnl7u7sYCDHH6Q/view?embed', description:'End to end case study on Hyperloop\u2019s product portfolio, strategy, and business model.', tags:['Product Strategy','Market Research','Business Model'] },
+  { id:'spotify', title:'Spotify Teardown', embed:'https://www.canva.com/design/DAGRgN_0UO8/ANe4TGgTReBpSSA3DkrWWw/view?embed', description:'Product breakdown of Spotify\u2019s portfolio, strategy, market research, and business model.', tags:['Product Canvas','Product Strategy','Future Enhancements'] }
+];
+const POSTS = [
+  { id:'pilot', title:'Pilot', date:'Apr 4, 2026', excerpt:'Starting is harder than building. It demands self-belief, commitment, and effort before results start showing up.', body:[
+    'Most people think that building something is the hard part.',
+    'It\u2019s not.',
+    'The hard part is starting when you are unsure, continuing when you face criticism, and strongly believing it matters when efforts don\u2019t yield any result immediately.',
+    'We try to seek validation before we begin \u2013 \u201cWill it work?\u201d, \u201cCan I do this?\u201d \u2013 questions that can make you rethink your decision.',
+    'Well, you will never know if you haven\u2019t tried it. And to try, you need to start somewhere.',
+    'For instance, I started this blog without knowing where it would go, simply because I wanted to build something new.',
+    'That\u2019s the point. You don\u2019t know. You start anyway.',
+    'Hi! My name is Aditya. Welcome to my blog and thanks for reading my Pilot post!'
+  ] }
+];
+const PHOTOS = [
+  { id:'p1', title:'Untitled', caption:'Caption goes here.', slot:'portrait 4:5', h:'320px' },
+  { id:'p2', title:'Untitled', caption:'Caption goes here.', slot:'landscape 3:2', h:'210px' },
+  { id:'p3', title:'Untitled', caption:'Caption goes here.', slot:'square 1:1', h:'270px' },
+  { id:'p4', title:'Untitled', caption:'Caption goes here.', slot:'landscape 16:9', h:'190px' },
+  { id:'p5', title:'Untitled', caption:'Caption goes here.', slot:'portrait 2:3', h:'360px' },
+  { id:'p6', title:'Untitled', caption:'Caption goes here.', slot:'square 1:1', h:'270px' },
+  { id:'p7', title:'Untitled', caption:'Caption goes here.', slot:'landscape 3:2', h:'210px' },
+  { id:'p8', title:'Untitled', caption:'Caption goes here.', slot:'portrait 4:5', h:'330px' },
+  { id:'p9', title:'Untitled', caption:'Caption goes here.', slot:'landscape 16:9', h:'190px' }
+];
+
+class Component extends DCLogic {
+  state = { page:'home', id:null, dark:false, votes:{}, counts:{} };
+
+  componentDidMount() {
+    this._sweep = () => this.sweepReveals();
+    window.addEventListener('scroll', this._sweep, { passive: true });
+    document.addEventListener('scroll', this._sweep, { passive: true, capture: true });
+    window.addEventListener('resize', this._sweep);
+    this._tick = setInterval(this._sweep, 400);
+    this._failsafe = setTimeout(() => {
+      document.querySelectorAll('[data-reveal]:not(.shown)').forEach((el) => {
+        if (el.getBoundingClientRect().top < (window.innerHeight || 800)) el.classList.add('shown');
+      });
+    }, 2000);
+    this.observeReveals();
+  }
+  componentDidUpdate() { this.observeReveals(); }
+  sweepReveals() {
+    const h = window.innerHeight || 800;
+    const pending = document.querySelectorAll('[data-reveal]:not(.shown)');
+    const byParent = new Map();
+    pending.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top >= h * 0.9) return;
+      if (r.top < -h * 1.5) { el.style.transition = 'none'; el.classList.add('shown'); return; }
+      const key = el.parentElement;
+      const arr = byParent.get(key) || [];
+      arr.push(el);
+      byParent.set(key, arr);
+    });
+    byParent.forEach((group) => {
+      group.forEach((el, i) => {
+        el.style.transitionDelay = Math.min(i * 70, 420) + 'ms';
+        el.classList.add('shown');
+      });
+    });
+  }
+  observeReveals() {
+    requestAnimationFrame(() => this.sweepReveals());
+    setTimeout(() => this.sweepReveals(), 120);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._sweep);
+    document.removeEventListener('scroll', this._sweep, true);
+    window.removeEventListener('resize', this._sweep);
+    clearInterval(this._tick);
+    clearTimeout(this._failsafe);
+  }
+  sideStyle(active) {
+    const base = 'display:block;padding:11px 14px;border-radius:8px;font-size:15px;font-weight:500;transition:background .18s ease,color .18s ease;';
+    return active ? base + 'background:var(--ink);color:var(--paper);' : base + 'color:var(--muted);';
+  }
+  scrollToY(y) {
+    const se = document.scrollingElement || document.documentElement;
+    se.scrollTop = Math.max(0, y);
+    if (window.parent && window.parent !== window) { try { window.parent.document.scrollingElement.scrollTop = Math.max(0, y); } catch (err) {} }
+    this.sweepReveals();
+    setTimeout(() => this.sweepReveals(), 80);
+  }
+  nav(page, id) {
+    return (e) => { if (e) e.preventDefault(); this.setState({ page, id, menu: false }); this.scrollToY(0); };
+  }
+  section(anchor) {
+    const jump = () => {
+      const el = document.getElementById(anchor);
+      if (!el) return;
+      const se = document.scrollingElement || document.documentElement;
+      this.scrollToY(el.getBoundingClientRect().top + se.scrollTop - 88);
+    };
+    return (e) => {
+      if (e) e.preventDefault();
+      if (this.state.page !== 'home') this.setState({ page: 'home', id: null, menu: false }, () => setTimeout(jump, 60));
+      else jump();
+    };
+  }
+  vote(id, dir) {
+    return (e) => {
+      e.preventDefault();
+      this.setState(s => {
+        const cur = s.votes[id];
+        const votes = { ...s.votes };
+        if (cur === dir) delete votes[id]; else votes[id] = dir;
+        return { votes };
+      });
+    };
+  }
+  baseCount(id, dir) {
+    let h = 0; for (const ch of id + dir) h = (h * 31 + ch.charCodeAt(0)) % 97;
+    return dir === 'up' ? 8 + (h % 34) : h % 5;
+  }
+
+  swipeSound(dir) {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      this._ac = this._ac || new Ctx();
+      const ac = this._ac;
+      if (ac.state === 'suspended') ac.resume();
+      const now = ac.currentTime;
+      const tick = (at, freq, level, len) => {
+        const o = ac.createOscillator();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(freq, at);
+        o.frequency.exponentialRampToValueAtTime(freq * 0.55, at + len);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, at);
+        g.gain.exponentialRampToValueAtTime(level, at + 0.003);
+        g.gain.exponentialRampToValueAtTime(0.0001, at + len);
+        o.connect(g); g.connect(ac.destination);
+        o.start(at); o.stop(at + len + 0.02);
+
+        const n = ac.createBuffer(1, Math.floor(ac.sampleRate * 0.02), ac.sampleRate);
+        const d = n.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+        const src = ac.createBufferSource();
+        src.buffer = n;
+        const hp = ac.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 4200;
+        const ng = ac.createGain();
+        ng.gain.value = level * 0.5;
+        src.connect(hp); hp.connect(ng); ng.connect(ac.destination);
+        src.start(at);
+      };
+      // two-part latch: crisp tick, then a softer second click
+      const hi = dir > 0 ? 2300 : 1750;
+      const lo = dir > 0 ? 1550 : 2150;
+      tick(now, hi, 0.14, 0.035);
+      tick(now + 0.075, lo, 0.09, 0.045);
+    } catch (err) {}
+  }
+  swipe(dir) {
+    return (e) => {
+      if (e) e.preventDefault();
+      if (this._busy) return;
+      this._busy = true;
+      this.swipeSound(dir);
+      this.setState({ exit: dir });
+      setTimeout(() => {
+        this.setState(s => ({ photo: ((s.photo || 0) + dir + 4) % 4, exit: 0 }));
+        this._busy = false;
+      }, 320);
+    };
+  }
+  cardStyle(rel, exiting, dir) {
+    const base = 'position:absolute;inset:0;border-radius:8px;overflow:hidden;background:var(--card);box-shadow:0 16px 36px rgba(0,0,0,.16);transform-origin:50% 120%;transition:transform .42s cubic-bezier(.3,.8,.3,1),opacity .32s ease;';
+    if (exiting) return base + 'transform:translateX(' + (dir > 0 ? '118%' : '-118%') + ') rotate(' + (dir > 0 ? 14 : -14) + 'deg);opacity:0;z-index:8;';
+    if (rel === 0) return base + 'transform:translate(0,0) rotate(0deg) scale(1);opacity:1;z-index:7;';
+    if (rel === 1) return base + 'transform:translate(0,0) rotate(-2deg) scale(.985);opacity:1;z-index:6;';
+    if (rel === 2) return base + 'transform:translate(0,0) rotate(2.5deg) scale(.97);opacity:1;z-index:5;';
+    return base + 'transform:translate(0,0) rotate(-3.5deg) scale(.955);opacity:1;z-index:4;';
+  }
+  renderVals() {
+    const { page, id, dark, votes } = this.state;
+    const PH = ['photo placeholder 2', 'photo placeholder 3', 'photo placeholder 4'];
+    const total = PH.length + 1;
+    const pi = ((this.state.photo || 0) % total + total) % total;
+    const ex = this.state.exit || 0;
+    const relOf = (i) => (i - pi + total) % total;
+    const styleFor = (i) => this.cardStyle(relOf(i), ex !== 0 && relOf(i) === (ex > 0 ? 0 : total - 1), ex);
+    const all = [...PROJECTS, ...CASES];
+    const current = page === 'post' ? POSTS.find(p => p.id === id) : all.find(p => p.id === id);
+    return {
+      theme: dark ? 'dark' : 'light',
+      themeIcon: dark ? '☾' : '☀',
+      toggleTheme: () => this.setState(s => {
+        const d = !s.dark;
+        document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+        return { dark: d };
+      }),
+      cardStyle0: styleFor(0),
+      photoCards: PH.map((label, k) => ({ label, style: styleFor(k + 1) })),
+      prevPhoto: this.swipe(-1),
+      nextPhoto: this.swipe(1),
+      goHome: this.nav('home', null),
+      goAbout: this.section('about'),
+      goExperience: this.section('experience'),
+      goWork: this.section('work'),
+      goContact: this.section('contact'),
+      goBlog: this.nav('blog', null),
+      goPhoto: this.nav('photography', null),
+      isHome: page === 'home',
+      isProject: page === 'project',
+      isSite: page === 'home' || page === 'project',
+      isBlog: page === 'blog',
+      isWriting: page === 'writing',
+      isPost: page === 'post',
+      isPhoto: page === 'photography',
+      showFooter: page !== 'blog',
+      menuOpen: !!this.state.menu,
+      toggleMenu: (e) => { e.preventDefault(); this.setState(s => ({ menu: !s.menu })); },
+      goWriting: this.nav('writing', null),
+      sideOpen: this.state.side !== false,
+      sideCols: this.state.side === false ? '74px' : '220px',
+      sideIcon: this.state.side === false ? '›' : '‹',
+      asideStyle: 'position:sticky;top:0;align-self:start;height:100vh;border-right:1px solid var(--line);padding:' + (this.state.side === false ? '28px 18px' : '34px 26px') + ';display:flex;flex-direction:column;gap:30px;background:var(--paper);box-sizing:border-box;overflow:hidden;',
+      toggleSide: (e) => { e.preventDefault(); this.setState(s => ({ side: s.side === false })); },
+      navOverview: this.sideStyle(page === 'blog'),
+      navWriting: this.sideStyle(page === 'writing' || page === 'post'),
+      navPhotography: this.sideStyle(page === 'photography'),
+      current: current || {},
+      hasEmbed: !!(current && current.embed),
+      noEmbed: !(current && current.embed),
+      projects: PROJECTS.map(p => ({ ...p, open: this.nav('project', p.id) })),
+      caseStudies: CASES.map(c => ({ ...c, open: this.nav('project', c.id) })),
+      posts: POSTS.map(p => ({ ...p, open: this.nav('post', p.id) })),
+      photos: PHOTOS.map(ph => {
+        const v = votes[ph.id];
+        return {
+          ...ph,
+          up: this.baseCount(ph.id,'up') + (v === 'up' ? 1 : 0),
+          down: this.baseCount(ph.id,'down') + (v === 'down' ? 1 : 0),
+          like: this.vote(ph.id,'up'),
+          dislike: this.vote(ph.id,'down'),
+          upBg: v === 'up' ? '#fff' : 'rgba(255,255,255,.14)',
+          upColor: v === 'up' ? '#0f0f0f' : '#fff',
+          upBorder: v === 'up' ? '#fff' : 'rgba(255,255,255,.45)',
+          downBg: v === 'down' ? '#fff' : 'rgba(255,255,255,.14)',
+          downColor: v === 'down' ? '#0f0f0f' : '#fff',
+          downBorder: v === 'down' ? '#fff' : 'rgba(255,255,255,.45)'
+        };
+      }),
+      roles: [
+        { dates:'Aug 2025 — Present', type:'Full-time', role:'Product Owner Intern', company:'Radiant Digital', points:['Leading social management platform migration strategies.','Translating vision into actionable user stories and backlogs.','Coordinating daily stand-ups with engineering and design teams.'] },
+        { dates:'Jun 2024 — Aug 2024', type:'Internship', role:'Software Developer Intern', company:'Bank of Montreal', points:['Modernizing backend architecture from Java to Python.','Building serverless applications with AWS Lambda.','Developing and documenting robust REST APIs.'] },
+        { dates:'Sep 2022 — Feb 2023', type:'Full-time', role:'Staff Consultant', company:'Oracle', points:['Led functional delivery of Oracle Fusion HCM modules, supporting enterprise HR transformations for large organizations.','Worked closely with clients to analyze HR processes and translate requirements into technical solutions across Core HR and Absence Management.','Guided testing, validation, and deployment activities to ensure smooth adoption of HR technology solutions.'] },
+        { dates:'Sep 2020 — Aug 2022', type:'Full-time', role:'Associate Consultant', company:'Oracle', points:['Worked on enterprise Oracle Fusion HCM implementations, configuring and delivering Core HR and Absence Management solutions.','Designed and automated HR workflows for leave management, employee records, and policy compliance.','Developed analytical reporting solutions to track compliance adherence workflows.'] }
+      ],
+      skillGroups: [
+        { name:'Product Management', items:['Product Strategy','Agile / Scrum','Product Roadmapping','Stakeholder Communication','User Story Writing'] },
+        { name:'AI & Data', items:['Large Language Models','RAG Architecture','Knowledge Graphs','Data Analysis','Prompt Engineering'] },
+        { name:'Engineering', items:['Python / Flask','React.js','SQL / PostgreSQL','AWS Services','API Development'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
