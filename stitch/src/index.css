@@ -5,25 +5,35 @@
 @layer base {
   :root {
     --paper: #f2f1ed;
-    --ink: #0f0f0f;
+    --ink: #00000f;
     --card: #ffffff;
     --line: #e3e1db;
-    --muted: #57544e;
-    --signal: #c4622d;
+    --muted: #393732;
+    --signal: #29f705;
+    --theme-signal: #c4622d;
     --chip: #ebe9e3;
-    --onInkLine: rgba(255,255,255,.32);
+    --onInkLine: rgba(255, 255, 255, 0.13);
     --onInkMuted: rgba(255,255,255,.62);
+    --contact-bg: #00000f;
+    --contact-fg: #f2f1ed;
+    --contact-border: transparent;
+    --contact-link-line: rgba(255, 255, 255, 0.35);
   }
   .dark {
-    --paper: #100f0e;
-    --ink: #f3f1ec;
-    --card: #1a1917;
+    --paper: #00000f;
+    --ink: #ffffff;
+    --card: #00000f;
     --line: #2b2a26;
-    --muted: #98948b;
-    --signal: #e08a52;
-    --chip: #232220;
+    --muted: #fffbf3;
+    --signal: #29f705;
+    --theme-signal: #c4622d;
+    --chip: #00000f;
     --onInkLine: rgba(0,0,0,.28);
     --onInkMuted: rgba(0,0,0,.6);
+    --contact-bg: #0a0a12;
+    --contact-fg: #ffffff;
+    --contact-border: #ffffff;
+    --contact-link-line: rgba(255, 255, 255, 0.55);
   }
 
   html {

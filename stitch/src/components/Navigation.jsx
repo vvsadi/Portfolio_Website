@@ -36,7 +36,7 @@ export default function Navigation() {
               className="absolute"
               style={{
                 left: 4, right: 4, bottom: 2, height: '1.5px',
-                background: 'var(--signal)',
+                background: 'var(--theme-signal)',
                 transformOrigin: 'left center',
                 animation: 'underdraw .55s cubic-bezier(.6,.05,.2,1) 1.1s both',
               }}
@@ -45,7 +45,7 @@ export default function Navigation() {
               className="absolute"
               style={{
                 left: 2, bottom: 1, width: 5, height: 5, borderRadius: '50%',
-                background: 'var(--signal)',
+                background: 'var(--theme-signal)',
                 '--penend': '74px',
                 animation: 'penrun 1.25s cubic-bezier(.55,.05,.25,1) both',
               }}

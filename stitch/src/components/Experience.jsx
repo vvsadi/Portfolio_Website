@@ -1,9 +1,9 @@
 const roles = [
   {
     dates: 'Aug 2025 – Present',
-    type: 'Full-Time',
     role: 'AI Business Analyst',
     company: 'Radiant Digital',
+    location: 'Vienna, VA, USA',
     points: [
       'Architecting AI solutions using Knowledge Graphs, RAG, Text-to-SQL, and intelligent model routing.',
       'Translating business needs into AI workflows, system architectures, user stories, and product roadmaps.',
@@ -12,9 +12,9 @@ const roles = [
   },
   {
     dates: 'Jun 2024 – Aug 2024',
-    type: 'Internship',
     role: 'Software Developer Intern',
     company: 'Bank of Montreal',
+    location: 'Irving, TX, USA',
     points: [
       'Modernizing backend architecture from Java to Python.',
       'Building serverless applications with AWS Lambda.',
@@ -23,9 +23,9 @@ const roles = [
   },
   {
     dates: 'Sep 2022 – Feb 2023',
-    type: 'Full-Time',
     role: 'Staff Consultant',
     company: 'Oracle',
+    location: 'Hyderabad, India',
     points: [
       'Led functional delivery of Oracle Fusion HCM modules, supporting enterprise HR transformations for large organizations.',
       'Worked closely with clients to analyze HR processes and translate HR requirements into technical solutions across Core HR, Absence Management, and related modules.',
@@ -34,9 +34,9 @@ const roles = [
   },
   {
     dates: 'Sep 2020 – Aug 2022',
-    type: 'Full-Time',
     role: 'Associate Consultant',
     company: 'Oracle',
+    location: 'Hyderabad, India',
     points: [
       'Worked on enterprise Oracle Fusion HCM implementations, helping configure and deliver Core HR and Absence Management solutions.',
       'Designed and automated HR workflows to streamline processes like leave management, employee records, and policy compliance.',
@@ -67,7 +67,7 @@ export default function Experience() {
           >
             <div>
               <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--ink)', margin: '0 0 8px' }}>{r.dates}</p>
-              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'var(--muted)', margin: 0 }}>{r.type}</p>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontStyle: 'italic', color: 'var(--muted)', margin: '0 0 8px' }}>{r.location}</p> 
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginBottom: 14 }}>

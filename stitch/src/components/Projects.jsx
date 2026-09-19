@@ -90,7 +90,7 @@ export default function Projects() {
                   paddingTop: 14,
                   borderTop: '1px solid var(--line)',
                   fontSize: 14,
-                  fontWeight: 600,
+                  fontWeight: 900,
                 }}
               >
                 <Link to={`/projects/${p.id}`} style={{ color: 'var(--ink)' }}>View project →</Link>
