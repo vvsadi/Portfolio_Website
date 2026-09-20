@@ -9,7 +9,8 @@
     --card: #ffffff;
     --line: #e3e1db;
     --muted: #393732;
-    --signal: #29f705;
+    --available-signal: #29f705;
+    --signal: #c4622d;
     --theme-signal: #c4622d;
     --chip: #ebe9e3;
     --onInkLine: rgba(255, 255, 255, 0.13);
