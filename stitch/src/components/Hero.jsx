@@ -81,7 +81,7 @@ export default function Hero() {
               animation: 'rise .7s cubic-bezier(.2,.7,.3,1) .05s both',
             }}
           >
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', display: 'inline-block' }} />
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--available-signal)', display: 'inline-block' }} />
             Available for new opportunities
           </div>
 

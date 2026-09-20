@@ -25,8 +25,9 @@
     --card: #00000f;
     --line: #2b2a26;
     --muted: #fffbf3;
-    --signal: #29f705;
+    --available-signal: #29f705;
     --theme-signal: #c4622d;
+    --signal: #c4622d;
     --chip: #00000f;
     --onInkLine: rgba(0,0,0,.28);
     --onInkMuted: rgba(0,0,0,.6);
