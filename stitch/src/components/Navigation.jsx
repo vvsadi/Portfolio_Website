@@ -57,7 +57,7 @@ export default function Navigation() {
           <button onClick={() => scrollTo('about')} className="transition-colors duration-200 hover:text-signal" style={{ color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer', paddingBottom: 3 }}>About</button>
           <button onClick={() => scrollTo('experience')} className="transition-colors duration-200 hover:text-signal" style={{ color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer', paddingBottom: 3 }}>Experience</button>
           <button onClick={() => scrollTo('work')} className="transition-colors duration-200 hover:text-signal" style={{ color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer', paddingBottom: 3 }}>Projects</button>
-          <Link to="/blog" className="transition-colors duration-200" style={{ color: 'var(--ink)', paddingBottom: 3 }}>Blog</Link>
+          <Link to="/blog" className="transition-colors duration-200 hover:text-signal" style={{ color: 'var(--ink)', paddingBottom: 3 }}>Blog</Link>
         </nav>
 
         <div className="flex items-center gap-3">
