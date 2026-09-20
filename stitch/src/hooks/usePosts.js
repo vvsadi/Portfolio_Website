@@ -12,7 +12,12 @@ export function usePosts() {
       .select('*')
       .order('created_at', { ascending: false })
       .then(({ data, error }) => {
+        if (error) console.error('usePosts error:', error);
         if (!error && data) setPosts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('usePosts catch:', err);
         setLoading(false);
       });
   }, []);
@@ -35,7 +40,12 @@ export function usePost(slug) {
       .eq('slug', slug)
       .single()
       .then(({ data, error }) => {
+        if (error) console.error('usePost error:', error);
         if (!error && data) setPost(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('usePost catch:', err);
         setLoading(false);
       });
   }, [slug]);
