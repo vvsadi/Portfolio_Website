@@ -1,18 +1,13 @@
 import { useState, useCallback, useRef } from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
 import Aditya from '../assets/Aditya Picture.jpeg';
-import Aditya2 from '../assets/Aditya2.jpeg';
-import Aditya3 from '../assets/Aditya3.jpeg';
-import Aditya4 from '../assets/Aditya4.jpeg';
 import Aditya5 from '../assets/Aditya5.jpg';
-import Aditya6 from '../assets/Aditya6.jpg';
-import Aditya7 from '../assets/Aditya7.jpeg';
 import resumePDF from '../assets/Aditya Vemparala Resume.pdf';
 import oracleLogo from '../assets/oracle.png';
 import bmoLogo from '../assets/bmo-blue-on-transparent-en.png';
 import radiantLogo from '../assets/radiant-logo.png';
 
-const PHOTOS = [Aditya2, Aditya3, Aditya4, Aditya5, Aditya6, Aditya7];
+const PHOTOS = [Aditya5];
 const TOTAL = PHOTOS.length + 1;
 
 function cardStyle(rel, exiting, dir) {

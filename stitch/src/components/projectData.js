@@ -119,6 +119,15 @@ export const caseStudies = [
     card_description: 'Product breakdown of Spotify\'s Portfolio, Strategy, Market Research, and Business Model.',
     description:
       'Product breakdown of Spotify\'s Portfolio, Strategy, Market Research, and Business Model.',
+    tags: ['Product Strategy', 'Market Research', 'Business Model', 'History, Growth, and Failures'],
+    embed: 'https://www.canva.com/design/DAGRgN_0UO8/ANe4TGgTReBpSSA3DkrWWw/view?embed',
+  },
+  {
+    id: 'usatoday',
+    title: 'USA Today',
+    card_description: 'End to end case study on USA Today\'s Product Portfolio, Strategy, and Business Model.',
+    description:
+      'End to end case study on USA Today\'s Product Portfolio, Strategy, and Business Model.',
     tags: ['Product Canvas', 'Product Strategy', 'Market Research', 'Future Enhancements'],
     embed: 'https://www.canva.com/design/DAGRgN_0UO8/ANe4TGgTReBpSSA3DkrWWw/view?embed',
   },
