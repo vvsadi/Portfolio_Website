@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import BlogLayout from './BlogLayout';
 import { usePhotos } from '../hooks/usePhotos';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function Photography() {
   const { photos, loading, addLike } = usePhotos();
   const [expanded, setExpanded] = useState(null);
+  const isMobile = useIsMobile();
 
   return (
     <BlogLayout>
-      <main style={{ padding: '72px 40px 0' }}>
+      <main style={{ padding: isMobile ? '72px 16px 0' : '72px 40px 0' }}>
         <h1
           style={{
             fontSize: 'clamp(38px, 5vw, 64px)',
@@ -40,7 +42,7 @@ export default function Photography() {
             No photos yet.
           </p>
         ) : (
-          <div style={{ columns: 3, columnGap: 4 }}>
+          <div style={{ columns: isMobile ? 1 : 3, columnGap: 4 }}>
             {photos.map((ph) => {
               const likeCount = ph.likes || 0;
 
@@ -120,7 +122,7 @@ export default function Photography() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: 40,
+              padding: isMobile ? 16 : 40,
               cursor: 'zoom-out',
               animation: 'pagein .25s cubic-bezier(.2,.8,.3,1) both',
             }}

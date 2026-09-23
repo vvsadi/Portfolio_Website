@@ -1,11 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { projects, caseStudies } from './projectData';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const all = [...projects, ...caseStudies];
 
 export default function ProjectDetail() {
   const { id } = useParams();
   const project = all.find((p) => p.id === id);
+  const isMobile = useIsMobile();
 
   if (!project) {
     return (
@@ -21,7 +23,7 @@ export default function ProjectDetail() {
   const hasEmbed = !!project.embed;
 
   return (
-    <main style={{ maxWidth: 900, margin: '0 auto', padding: '64px 28px 0', animation: 'pagein .5s cubic-bezier(.2,.8,.3,1) both' }}>
+    <main style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '48px 16px 0' : '64px 28px 0', animation: 'pagein .5s cubic-bezier(.2,.8,.3,1) both' }}>
       <Link
         to="/"
         style={{

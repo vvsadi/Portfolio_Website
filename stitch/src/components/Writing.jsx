@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { usePosts } from '../hooks/usePosts';
+import { useIsMobile } from '../hooks/useIsMobile';
 import BlogLayout from './BlogLayout';
 
 function formatDate(dateStr) {
@@ -10,10 +11,11 @@ function formatDate(dateStr) {
 
 export default function Writing() {
   const { posts, loading } = usePosts();
+  const isMobile = useIsMobile();
 
   return (
     <BlogLayout>
-      <main style={{ padding: '72px 40px 0', maxWidth: 1000 }}>
+      <main style={{ padding: isMobile ? '72px 16px 0' : '72px 40px 0', maxWidth: 1000 }}>
         <h1
           style={{
             fontSize: 'clamp(38px, 5vw, 64px)',
@@ -41,26 +43,27 @@ export default function Writing() {
                 to={`/blog/writing/${po.slug}`}
                 data-reveal
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '150px minmax(0, 1fr) 96px',
-                  gap: 28,
+                  display: isMobile ? 'flex' : 'grid',
+                  flexDirection: isMobile ? 'column' : undefined,
+                  gridTemplateColumns: isMobile ? undefined : '150px minmax(0, 1fr) 96px',
+                  gap: isMobile ? 8 : 28,
                   alignItems: 'baseline',
                   padding: '30px 0',
                   borderTop: '1px solid var(--line)',
                   transition: 'padding-left .25s cubic-bezier(.2,.7,.3,1)',
                   color: 'var(--ink)',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.paddingLeft = '14px'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = '0'; }}
+                onMouseEnter={(e) => { if (!isMobile) e.currentTarget.style.paddingLeft = '14px'; }}
+                onMouseLeave={(e) => { if (!isMobile) e.currentTarget.style.paddingLeft = '0'; }}
               >
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--ink)' }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isMobile ? 13 : 15, fontWeight: 500, color: 'var(--muted)' }}>
                   {formatDate(po.created_at)}
                 </span>
                 <div>
-                  <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.03em', margin: '0 0 10px' }}>{po.title}</h2>
-                  <p style={{ fontSize: 16, color: 'var(--muted)', lineHeight: 1.6, margin: 0, maxWidth: '62ch' }}>{po.excerpt}</p>
+                  <h2 style={{ fontSize: isMobile ? 22 : 28, fontWeight: 700, letterSpacing: '-0.03em', margin: '0 0 10px' }}>{po.title}</h2>
+                  <p style={{ fontSize: isMobile ? 14 : 16, color: 'var(--muted)', lineHeight: 1.6, margin: 0, maxWidth: '62ch' }}>{po.excerpt}</p>
                 </div>
-                <span style={{ fontSize: 14, fontWeight: 600, textAlign: 'right' }}>Read →</span>
+                <span style={{ fontSize: 14, fontWeight: 600, textAlign: isMobile ? 'left' : 'right' }}>Read →</span>
               </Link>
             ))}
           </div>

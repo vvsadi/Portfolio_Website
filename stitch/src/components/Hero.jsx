@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import { useIsMobile } from '../hooks/useIsMobile';
 import Aditya from '../assets/Aditya Picture.jpeg';
 import Aditya2 from '../assets/Aditya2.jpeg';
 import Aditya3 from '../assets/Aditya3.jpeg';
@@ -36,6 +37,7 @@ export default function Hero() {
   const [photoIdx, setPhotoIdx] = useState(0);
   const [exit, setExit] = useState(0);
   const busy = useRef(false);
+  const isMobile = useIsMobile();
 
   const swipe = useCallback((dir) => {
     if (busy.current) return;
@@ -56,11 +58,12 @@ export default function Hero() {
         className="mx-auto"
         style={{
           maxWidth: 1180,
-          padding: '76px 28px 88px',
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,.85fr)',
-          gap: 56,
-          alignItems: 'end',
+          padding: isMobile ? '48px 16px 48px' : '76px 28px 88px',
+          display: isMobile ? 'flex' : 'grid',
+          flexDirection: isMobile ? 'column' : undefined,
+          gridTemplateColumns: isMobile ? undefined : 'minmax(0,1.15fr) minmax(0,.85fr)',
+          gap: isMobile ? 40 : 56,
+          alignItems: isMobile ? undefined : 'end',
         }}
       >
         <div>
@@ -252,10 +255,10 @@ export default function Hero() {
           style={{ maxWidth: 1180, padding: 28, justifyContent: 'space-between', gap: 40 }}
         >
           <span className="mono-label" style={{ color: 'var(--ink)', flexShrink: 0 }}>Worked with</span>
-          <div className="flex items-center flex-wrap" style={{ flex: 1, justifyContent: 'space-between', gap: 48 }}>
-            <img src={oracleLogo} alt="Oracle" style={{ height: 64, width: 'auto', objectFit: 'contain', opacity: .85 }} />
-            <img src={bmoLogo} alt="Bank of Montreal" style={{ height: 48, width: 'auto', objectFit: 'contain', opacity: .85 }} />
-            <img src={radiantLogo} alt="Radiant Digital" style={{ height: 48, width: 'auto', objectFit: 'contain', opacity: .85 }} />
+          <div className="flex items-center flex-wrap" style={{ flex: 1, justifyContent: isMobile ? 'center' : 'space-between', gap: isMobile ? 28 : 48 }}>
+            <img src={oracleLogo} alt="Oracle" style={{ height: isMobile ? 48 : 64, width: 'auto', objectFit: 'contain', opacity: .85 }} />
+            <img src={bmoLogo} alt="Bank of Montreal" style={{ height: isMobile ? 36 : 48, width: 'auto', objectFit: 'contain', opacity: .85 }} />
+            <img src={radiantLogo} alt="Radiant Digital" style={{ height: isMobile ? 36 : 48, width: 'auto', objectFit: 'contain', opacity: .85 }} />
           </div>
         </div>
       </section>

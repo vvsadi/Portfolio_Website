@@ -1,3 +1,5 @@
+import { useIsMobile } from '../hooks/useIsMobile';
+
 const skillGroups = [
   {
     name: 'Product Management',
@@ -14,10 +16,12 @@ const skillGroups = [
 ];
 
 export default function Skills() {
+  const isMobile = useIsMobile();
+
   return (
-    <section id="skills" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '100px 28px 0' }}>
+    <section id="skills" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '64px 16px 0' : '100px 28px 0' }}>
       <h2 className="section-heading" style={{ margin: '0 0 40px' }}>Skills</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
         {skillGroups.map((g) => (
           <div
             key={g.name}

@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../hooks/useTheme';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function AdminEditor() {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export default function AdminEditor() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(isEditing);
   const [preview, setPreview] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!id) return;
@@ -142,12 +144,14 @@ export default function AdminEditor() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 32px',
+          padding: isMobile ? '16px 16px' : '20px 32px',
           borderBottom: '1px solid var(--line)',
           position: 'sticky',
           top: 0,
           background: 'var(--paper)',
           zIndex: 20,
+          flexWrap: isMobile ? 'wrap' : undefined,
+          gap: isMobile ? 10 : undefined,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
@@ -218,7 +222,7 @@ export default function AdminEditor() {
         </div>
       </header>
 
-      <main style={{ maxWidth: 800, margin: '0 auto', padding: '40px 32px' }}>
+      <main style={{ maxWidth: 800, margin: '0 auto', padding: isMobile ? '24px 16px' : '40px 32px' }}>
         {error && (
           <div style={{ padding: '14px 18px', background: 'rgba(224,36,94,.08)', border: '1px solid #e0245e', borderRadius: 10, marginBottom: 24 }}>
             <p style={{ fontSize: 14, color: '#e0245e', margin: 0 }}>{error}</p>

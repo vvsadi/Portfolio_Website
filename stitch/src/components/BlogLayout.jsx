@@ -2,15 +2,18 @@ import { useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function BlogLayout({ children }) {
   const containerRef = useRef(null);
   useScrollReveal(containerRef);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileSidebar, setMobileSidebar] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggle } = useTheme();
+  const isMobile = useIsMobile();
 
   const isWriting = location.pathname.startsWith('/blog/writing');
   const isPhoto = location.pathname === '/blog/photography';
@@ -36,8 +39,8 @@ export default function BlogLayout({ children }) {
     <div
       ref={containerRef}
       style={{
-        display: 'grid',
-        gridTemplateColumns: `${sidebarOpen ? '220px' : '74px'} minmax(0, 1fr)`,
+        display: isMobile ? 'block' : 'grid',
+        gridTemplateColumns: isMobile ? undefined : `${sidebarOpen ? '220px' : '74px'} minmax(0, 1fr)`,
         transition: 'grid-template-columns .3s cubic-bezier(.2,.8,.3,1)',
         animation: 'pagein .45s cubic-bezier(.2,.8,.3,1) both',
         minHeight: '100vh',
@@ -97,55 +100,120 @@ export default function BlogLayout({ children }) {
         </div>
       )}
 
+      {/* Mobile sidebar toggle */}
+      {isMobile && (
+        <button
+          onClick={() => setMobileSidebar(true)}
+          aria-label="Open sidebar"
+          style={{
+            position: 'fixed',
+            top: 22,
+            left: 16,
+            zIndex: 59,
+            width: 46,
+            height: 46,
+            border: '1px solid var(--line)',
+            background: 'var(--paper)',
+            borderRadius: 10,
+            color: 'var(--ink)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 20,
+            boxShadow: '0 6px 18px rgba(0,0,0,.10)',
+          }}
+        >
+          ☰
+        </button>
+      )}
+
+      {/* Mobile sidebar overlay */}
+      {isMobile && mobileSidebar && (
+        <div className="blog-sidebar-overlay" onClick={() => setMobileSidebar(false)} />
+      )}
+
       {/* Sidebar */}
       <aside
         style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
+          ...(isMobile ? {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            height: '100vh',
+            width: 260,
+            zIndex: 61,
+            transform: mobileSidebar ? 'translateX(0)' : 'translateX(-100%)',
+            transition: 'transform .3s cubic-bezier(.2,.8,.3,1)',
+            boxShadow: mobileSidebar ? '8px 0 32px rgba(0,0,0,.15)' : 'none',
+          } : {
+            position: 'sticky',
+            top: 0,
+            height: '100vh',
+          }),
           borderRight: '1px solid var(--line)',
           background: 'var(--paper)',
           boxSizing: 'border-box',
           overflow: 'hidden',
-          padding: sidebarOpen ? '34px 26px' : '28px 18px',
+          padding: isMobile ? '34px 26px' : (sidebarOpen ? '34px 26px' : '28px 18px'),
           display: 'flex',
           flexDirection: 'column',
           gap: 24,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
-          {sidebarOpen && (
-            <Link to="/" aria-label="Home" style={{ display: 'inline-block' }}>
-              <span style={{ fontFamily: "'Lucida Calligraphy','Lucida Handwriting',cursive", fontSize: 28, color: 'var(--ink)' }}>VVS</span>
-            </Link>
+          <Link to="/" aria-label="Home" style={{ display: 'inline-block' }}>
+            <span style={{ fontFamily: "'Lucida Calligraphy','Lucida Handwriting',cursive", fontSize: 28, color: 'var(--ink)' }}>VVS</span>
+          </Link>
+          {isMobile ? (
+            <button
+              onClick={() => setMobileSidebar(false)}
+              aria-label="Close sidebar"
+              style={{
+                width: 34,
+                height: 34,
+                border: '1px solid var(--line)',
+                background: 'transparent',
+                color: 'var(--ink)',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontSize: 16,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              ✕
+            </button>
+          ) : (
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label="Toggle sidebar"
+              style={{
+                width: 34,
+                height: 34,
+                flexShrink: 0,
+                border: '1px solid var(--line)',
+                background: 'transparent',
+                color: 'var(--ink)',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontSize: 14,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {sidebarOpen ? '‹' : '›'}
+            </button>
           )}
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            aria-label="Toggle sidebar"
-            style={{
-              width: 34,
-              height: 34,
-              flexShrink: 0,
-              border: '1px solid var(--line)',
-              background: 'transparent',
-              color: 'var(--ink)',
-              borderRadius: 8,
-              cursor: 'pointer',
-              fontSize: 14,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {sidebarOpen ? '‹' : '›'}
-          </button>
         </div>
 
-        {sidebarOpen && (
+        {(isMobile || sidebarOpen) && (
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <Link to="/blog" style={navItemStyle(!isWriting && !isPhoto)}>Overview</Link>
-            <Link to="/blog/writing" style={navItemStyle(isWriting)}>Writing</Link>
-            <Link to="/blog/photography" style={navItemStyle(isPhoto)}>Photography</Link>
+            <Link to="/blog" onClick={() => setMobileSidebar(false)} style={navItemStyle(!isWriting && !isPhoto)}>Overview</Link>
+            <Link to="/blog/writing" onClick={() => setMobileSidebar(false)} style={navItemStyle(isWriting)}>Writing</Link>
+            <Link to="/blog/photography" onClick={() => setMobileSidebar(false)} style={navItemStyle(isPhoto)}>Photography</Link>
           </nav>
         )}
 
@@ -166,7 +234,7 @@ export default function BlogLayout({ children }) {
           >
             {theme === 'dark' ? '☀' : '☾'}
           </button>
-          {sidebarOpen && (
+          {(isMobile || sidebarOpen) && (
             <Link
               to="/"
               style={{

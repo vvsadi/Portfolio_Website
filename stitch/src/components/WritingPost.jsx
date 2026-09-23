@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { usePost } from '../hooks/usePosts';
+import { useIsMobile } from '../hooks/useIsMobile';
 import BlogLayout from './BlogLayout';
 
 function formatDate(dateStr) {
@@ -13,11 +14,12 @@ function formatDate(dateStr) {
 export default function WritingPost() {
   const { slug } = useParams();
   const { post, loading, incrementLikes } = usePost(slug);
+  const isMobile = useIsMobile();
 
   if (loading) {
     return (
       <BlogLayout>
-        <main style={{ padding: '72px 40px 0' }}>
+        <main style={{ padding: isMobile ? '72px 16px 0' : '72px 40px 0' }}>
           <p style={{ color: 'var(--muted)', fontSize: 15 }}>Loading...</p>
         </main>
       </BlogLayout>
@@ -27,7 +29,7 @@ export default function WritingPost() {
   if (!post) {
     return (
       <BlogLayout>
-        <main style={{ padding: '72px 40px 0' }}>
+        <main style={{ padding: isMobile ? '72px 16px 0' : '72px 40px 0' }}>
           <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 16 }}>Post not found</h1>
           <Link
             to="/blog/writing"
@@ -74,7 +76,7 @@ export default function WritingPost() {
           </span>
         </div>
 
-        <div style={{ maxWidth: 760, padding: '44px 40px 0' }}>
+        <div style={{ maxWidth: 760, padding: isMobile ? '28px 16px 0' : '44px 40px 0' }}>
           <Link
             to="/blog/writing"
             style={{

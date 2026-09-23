@@ -1,3 +1,5 @@
+import { useIsMobile } from '../hooks/useIsMobile';
+
 const roles = [
   {
     dates: 'Aug 2025 – Present',
@@ -46,8 +48,10 @@ const roles = [
 ];
 
 export default function Experience() {
+  const isMobile = useIsMobile();
+
   return (
-    <section id="experience" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '100px 28px 0' }}>
+    <section id="experience" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '64px 16px 0' : '100px 28px 0' }}>
       <h2 className="section-heading" style={{ margin: '0 0 44px' }}>Where I've worked</h2>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {roles.map((r, i) => (
@@ -55,15 +59,16 @@ export default function Experience() {
             key={i}
             data-reveal
             style={{
-              display: 'grid',
-              gridTemplateColumns: '180px minmax(0, 1fr)',
-              gap: 40,
+              display: isMobile ? 'flex' : 'grid',
+              flexDirection: isMobile ? 'column' : undefined,
+              gridTemplateColumns: isMobile ? undefined : '180px minmax(0, 1fr)',
+              gap: isMobile ? 12 : 40,
               padding: '30px 0',
               borderTop: '1px solid var(--line)',
               transition: 'padding-left .25s cubic-bezier(.2,.7,.3,1)',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.paddingLeft = '14px'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.paddingLeft = '0'; }}
+            onMouseEnter={(e) => { if (!isMobile) e.currentTarget.style.paddingLeft = '14px'; }}
+            onMouseLeave={(e) => { if (!isMobile) e.currentTarget.style.paddingLeft = '0'; }}
           >
             <div>
               <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--ink)', margin: '0 0 8px' }}>{r.dates}</p>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../hooks/useTheme';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 function formatDate(dateStr) {
   const t = Date.parse(dateStr);
@@ -17,6 +18,7 @@ export default function AdminPhotos() {
   const [error, setError] = useState('');
   const fileRef = useRef(null);
   const { theme, toggle } = useTheme();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchPhotos();
@@ -134,7 +136,7 @@ export default function AdminPhotos() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 32px',
+          padding: isMobile ? '16px 16px' : '20px 32px',
           borderBottom: '1px solid var(--line)',
         }}
       >
@@ -173,7 +175,7 @@ export default function AdminPhotos() {
         </div>
       </header>
 
-      <main style={{ maxWidth: 900, margin: '0 auto', padding: '48px 32px' }}>
+      <main style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '32px 16px' : '48px 32px' }}>
         {/* Tab nav */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 40 }}>
           <Link
@@ -318,7 +320,7 @@ export default function AdminPhotos() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(220px, 1fr))',
               gap: 16,
             }}
           >

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../hooks/useTheme';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 function formatDate(dateStr) {
   const t = Date.parse(dateStr);
@@ -13,6 +14,7 @@ export default function AdminDashboard() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { theme, toggle } = useTheme();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchPosts();
@@ -64,7 +66,7 @@ export default function AdminDashboard() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 32px',
+          padding: isMobile ? '16px 16px' : '20px 32px',
           borderBottom: '1px solid var(--line)',
         }}
       >
@@ -103,7 +105,7 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <main style={{ maxWidth: 900, margin: '0 auto', padding: '48px 32px' }}>
+      <main style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '32px 16px' : '48px 32px' }}>
         {/* Tab nav */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 40 }}>
           <span
@@ -214,11 +216,12 @@ export default function AdminDashboard() {
                 key={post.id}
                 style={{
                   display: 'flex',
-                  alignItems: 'center',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  alignItems: isMobile ? 'flex-start' : 'center',
                   justifyContent: 'space-between',
                   padding: '24px 0',
                   borderTop: '1px solid var(--line)',
-                  gap: 20,
+                  gap: isMobile ? 12 : 20,
                 }}
               >
                 <div style={{ flex: 1, minWidth: 0 }}>

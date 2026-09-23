@@ -141,3 +141,15 @@
 .hover\:text-signal:hover {
   color: var(--signal) !important;
 }
+
+/* Mobile sidebar overlay */
+@media (max-width: 767px) {
+  .blog-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(0,0,0,.4);
+    backdrop-filter: blur(4px);
+    animation: pagein .2s ease both;
+  }
+}

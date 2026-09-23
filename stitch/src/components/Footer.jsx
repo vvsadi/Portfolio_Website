@@ -1,14 +1,20 @@
+import { useIsMobile } from '../hooks/useIsMobile';
+
 export default function Footer() {
+  const isMobile = useIsMobile();
+
   return (
     <footer
       style={{
         borderTop: '1px solid var(--line)',
         maxWidth: 1180,
-        margin: '80px auto 0',
-        padding: '24px 28px',
+        margin: isMobile ? '48px auto 0' : '80px auto 0',
+        padding: isMobile ? '24px 16px' : '24px 28px',
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: isMobile ? 'flex-start' : 'center',
         justifyContent: 'space-between',
+        gap: isMobile ? 12 : undefined,
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: 13,
         color: 'var(--muted)',

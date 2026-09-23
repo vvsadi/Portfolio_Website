@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import { projects, caseStudies } from './projectData';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function Projects() {
+  const isMobile = useIsMobile();
+
   return (
     <>
       {/* Projects */}
-      <section id="work" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '92px 28px 0' }}>
+      <section id="work" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '64px 16px 0' : '92px 28px 0' }}>
         <h2 className="section-heading" style={{ margin: '0 0 40px' }}>Projects</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
           {projects.map((p) => (
             <div
               key={p.id}
@@ -104,9 +107,9 @@ export default function Projects() {
       </section>
 
       {/* Case Studies */}
-      <section data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '76px 28px 0' }}>
+      <section data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '48px 16px 0' : '76px 28px 0' }}>
         <h2 className="section-heading" style={{ margin: '0 0 32px' }}>Case studies</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 20 }}>
           {caseStudies.map((c) => (
             <div
               key={c.id}

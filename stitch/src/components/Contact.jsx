@@ -1,4 +1,8 @@
+import { useIsMobile } from '../hooks/useIsMobile';
+
 export default function Contact() {
+  const isMobile = useIsMobile();
+
   const linkStyle = {
     color: 'var(--contact-fg)',
     borderBottom: '1px solid var(--contact-link-line)',
@@ -9,14 +13,14 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '110px 28px 0' }}>
+    <section id="contact" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '64px 16px 0' : '110px 28px 0' }}>
       <div
         style={{
           background: 'var(--contact-bg)',
           color: 'var(--contact-fg)',
           border: '1px solid var(--contact-border)',
           borderRadius: 14,
-          padding: 64,
+          padding: isMobile ? '32px 20px' : 64,
         }}
       >
         <h2
@@ -36,10 +40,11 @@ export default function Contact() {
         <div
           style={{
             display: 'flex',
-            alignItems: 'stretch',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'stretch' : 'stretch',
             justifyContent: 'space-between',
-            gap: 24,
-            fontSize: 16,
+            gap: isMobile ? 16 : 24,
+            fontSize: isMobile ? 14 : 16,
             flexWrap: 'wrap',
           }}
         >

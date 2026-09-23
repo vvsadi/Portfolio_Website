@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function BlogOverview() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   function goHomeSection(id) {
     setMenuOpen(false);
@@ -116,7 +118,7 @@ export default function BlogOverview() {
             zIndex: 11,
             maxWidth: 1180,
             margin: '0 auto',
-            padding: '0 28px 86px',
+            padding: isMobile ? '0 16px 48px' : '0 28px 86px',
             width: '100%',
             boxSizing: 'border-box',
           }}
@@ -161,9 +163,9 @@ export default function BlogOverview() {
                 border: '1.5px solid rgba(255,255,255,.8)',
                 background: 'transparent',
                 color: '#fff',
-                padding: '16px 30px',
+                padding: isMobile ? '14px 24px' : '16px 30px',
                 borderRadius: 999,
-                fontSize: 16,
+                fontSize: isMobile ? 15 : 16,
                 fontWeight: 700,
                 transition: 'transform .22s cubic-bezier(.2,.8,.3,1), background .22s ease, color .22s ease',
               }}
@@ -179,9 +181,9 @@ export default function BlogOverview() {
                 border: '1.5px solid rgba(255,255,255,.8)',
                 background: 'transparent',
                 color: '#fff',
-                padding: '16px 30px',
+                padding: isMobile ? '14px 24px' : '16px 30px',
                 borderRadius: 999,
-                fontSize: 16,
+                fontSize: isMobile ? 15 : 16,
                 fontWeight: 700,
                 transition: 'transform .22s cubic-bezier(.2,.8,.3,1), background .22s ease, color .22s ease',
               }}

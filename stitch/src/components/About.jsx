@@ -1,3 +1,4 @@
+import { useIsMobile } from '../hooks/useIsMobile';
 import UTD from '../assets/UTD.png';
 import VIT from '../assets/VIT.png';
 import cspo from '../assets/CSPO.png';
@@ -5,9 +6,11 @@ import ociAI from '../assets/OCI AI.png';
 import oci from '../assets/OCI Foundations.png';
 
 export default function About() {
+  const isMobile = useIsMobile();
+
   return (
-    <section id="about" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: '100px 28px 0' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 64 }}>
+    <section id="about" data-reveal style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '64px 16px 0' : '100px 28px 0' }}>
+      <div style={{ display: isMobile ? 'flex' : 'grid', flexDirection: isMobile ? 'column' : undefined, gridTemplateColumns: isMobile ? undefined : 'minmax(0,1fr) minmax(0,1fr)', gap: isMobile ? 40 : 64 }}>
         <div>
           <h2 className="section-heading" style={{ margin: '0 0 26px' }}>
             I sit between technology, data, and business.
@@ -48,7 +51,7 @@ export default function About() {
 
           <div>
             <h3 className="mono-label" style={{ color: 'var(--ink)', margin: '0 0 18px' }}>Certifications</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0,1fr))', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0,1fr))' : 'repeat(3, minmax(0,1fr))', gap: 12 }}>
               <a
                 data-reveal
                 href="#"
