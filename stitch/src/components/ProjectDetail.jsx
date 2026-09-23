@@ -21,18 +21,19 @@ export default function ProjectDetail() {
   }
 
   const hasEmbed = !!project.embed;
+  const isCaseStudy = caseStudies.includes(project);
 
   return (
     <main style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '48px 16px 0' : '64px 28px 0', animation: 'pagein .5s cubic-bezier(.2,.8,.3,1) both' }}>
       <Link
-        to="/"
+        to={isCaseStudy ? '/case-studies' : '/projects'}
         style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 12,
           color: 'var(--muted)',
         }}
       >
-        ← Back to projects
+        {isCaseStudy ? '← Back to case studies' : '← Back to projects'}
       </Link>
 
       <h1

@@ -9,6 +9,7 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectDetail from './components/ProjectDetail';
+import AllWork from './components/AllWork';
 import BlogOverview from './components/BlogOverview';
 import Writing from './components/Writing';
 import WritingPost from './components/WritingPost';
@@ -79,6 +80,8 @@ function App() {
       <ScrollToSection />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<AllWork kind="projects" />} />
+        <Route path="/case-studies" element={<AllWork kind="caseStudies" />} />
         <Route path="/projects/:id" element={<ProjectPage />} />
         <Route path="/blog" element={<BlogOverview />} />
         <Route path="/blog/writing" element={<Writing />} />

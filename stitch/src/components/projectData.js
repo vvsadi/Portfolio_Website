@@ -1,5 +1,22 @@
 export const projects = [
   {
+    id: 'Text2SQL-2',
+    title: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
+    category: 'Work',
+    card_description: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
+    description: 'A Benchmarking Harness for evaluating three retrieval architectures - Semantic Search, Knowledge Graph Retrieval, and Full Schema Prompting to measure Execution Accuracy using BIRD Standards and Token Consumption metrics in each retrieval architecture for the same natural language user query.Informs architectural decision making in AI systems.',
+    tags: ['Data Engineering', 'neo4j', 'Knowledge Graphs', 'LiteLLM', 'LLMs', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
+  },
+  {
+    id: 'azure-data-factory-1',
+    title: 'Metadata-Driven Multi-Table ETL Pipeline in Azure Data Factory',
+    category: 'Personal',
+    card_description: 'Metadata-Driven Multi-Table Incremental ETL Pipeline in Azure Data Factory supporting Incremental and Full Data Loads.',
+    description: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory supporting Incremental and Full Data Loads. \nUse Case: \nA company has multiple tables in SQL Server:\n• Customers\n• Orders\n• Products\n\nSteps:\n1. Load all tables to Azure Data Lake Storage Gen2.\n2. Support both Full Load and Incremental Load.\n3. Avoid creating separate pipelines for each table.\n4. Track row counts and execution status.\n5. Automatically update watermark values.',
+    tags: ['Data Engineering', 'Azure Data Factory', 'SQL Server', 'Azure Data Lake Storage Gen2'],
+    repoUrl: 'https://github.com/vvsadi/azure_data_eng_proj_ADF',
+  },
+  {
     id: 'feastit',
     title: 'FeastIT',
     category: 'Consulting Project',
@@ -51,15 +68,6 @@ export const projects = [
     embed: 'https://www.canva.com/design/DAGVROMi6z8/OwkKG8RymZcS7xarZjDUag/view?embed',
   },
   {
-    id: 'azure-data-factory-1',
-    title: 'Metadata-Driven Multi-Table ETL Pipeline in Azure Data Factory',
-    category: 'Personal',
-    card_description: 'Metadata-Driven Multi-Table Incremental ETL Pipeline in Azure Data Factory supporting Incremental and Full Data Loads.',
-    description: 'Metadata-Driven Multi-Table Incremental ETL Framework in Azure Data Factory supporting Incremental and Full Data Loads. \nUse Case: \nA company has multiple tables in SQL Server:\n• Customers\n• Orders\n• Products\n\nSteps:\n1. Load all tables to Azure Data Lake Storage Gen2.\n2. Support both Full Load and Incremental Load.\n3. Avoid creating separate pipelines for each table.\n4. Track row counts and execution status.\n5. Automatically update watermark values.',
-    tags: ['Data Engineering', 'Azure Data Factory', 'SQL Server', 'Azure Data Lake Storage Gen2'],
-    repoUrl: 'https://github.com/vvsadi/azure_data_eng_proj_ADF',
-  },
-  {
     id: 'expense-mgmt',
     title: 'Expense Management Application',
     category: 'Personal',
@@ -75,14 +83,6 @@ export const projects = [
     card_description: 'Text to SQL Query and Insights Chat Interface with Semantic Caching',
     description: 'Generate SQL queries from Natural Language using LLMs and Knowledge Graphs with business ontologies, and generate insight summaries for business users.',
     tags: ['Data Engineering', 'neo4j', 'AutoGen', 'Semantic Caching', 'Knowledge Graphs', 'LLMs', 'Business Ontologies', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
-  },
-  {
-    id: 'Text2SQL-2',
-    title: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
-    category: 'Work',
-    card_description: 'Benchmarking Harness for Model Governance, Token Optimization, and Execution Accuracy',
-    description: 'A Benchmarking Harness for evaluating three retrieval architectures - Semantic Search, Knowledge Graph Retrieval, and Full Schema Prompting to measure Execution Accuracy using BIRD Standards and Token Consumption metrics in each retrieval architecture for the same natural language user query.Informs architectural decision making in AI systems.',
-    tags: ['Data Engineering', 'neo4j', 'Knowledge Graphs', 'LiteLLM', 'LLMs', 'RAG', 'API', 'Python', 'Postgres Vector DB', 'Docker'],
   },
   {
     id: 'Text2SQL-3',
@@ -129,6 +129,6 @@ export const caseStudies = [
     description:
       'End to end case study on USA Today\'s Product Portfolio, Strategy, and Business Model.',
     tags: ['Product Canvas', 'Product Strategy', 'Market Research', 'Future Enhancements'],
-    embed: 'https://www.canva.com/design/DAGRgN_0UO8/ANe4TGgTReBpSSA3DkrWWw/view?embed',
+    embed: 'https://1drv.ms/p/c/10b575bd2dff4328/IQTbn-8jUBL4Sa_3lYDLB5EhAXfYUrYj6d17qneNO2aZ5iA?em=2&wdAr=1.7777777777777777',
   },
 ];
