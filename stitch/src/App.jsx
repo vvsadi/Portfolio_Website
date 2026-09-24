@@ -45,9 +45,9 @@ function Home() {
       <Navigation />
       <main>
         <Hero />
+        <Experience />
         <Projects />
         <About />
-        <Experience />
         <Skills />
         <Contact />
       </main>
